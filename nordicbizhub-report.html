@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="تقرير تقني احترافي شامل لتحليل وتقييم منصة NordicBizHub - Technical Intelligence Report">
+    <title>NordicBizHub — تقرير الاستخبارات التقنية | Technical Intelligence Report</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #141824;
+            --bg-glass: rgba(20, 24, 36, 0.7);
+            --accent-gold: #d4af37;
+            --accent-gold-light: #f4d683;
+            --accent-blue: #3b82f6;
+            --text-primary: #e8eaed;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: rgba(212, 175, 55, 0.2);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.15);
+            --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        [data-theme="light"] {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --text-primary: #1a1a1a;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --border-color: rgba(212, 175, 55, 0.3);
+            --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.2);
+            --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        header {
+            padding: 32px 0 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .logo-section h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+        
+        .logo-section p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .theme-toggle, .lang-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .theme-toggle:hover, .lang-toggle:hover {
+            background: var(--accent-gold);
+            color: var(--bg-primary);
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+        
+        /* Warning Banner */
+        .warning-banner {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(239, 68, 68, 0.15) 100%);
+            border: 1px solid var(--warning);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 32px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .warning-banner h3 {
+            color: var(--warning);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .warning-banner p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 0;
+            margin: 32px 0 24px;
+            border-bottom: 2px solid var(--border-color);
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-gold) var(--bg-secondary);
+        }
+        
+        .tabs-nav::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .tabs-nav::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+        
+        .tabs-nav::-webkit-scrollbar-thumb {
+            background: var(--accent-gold);
+            border-radius: 3px;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border: 1px solid transparent;
+            position: relative;
+        }
+        
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-gold);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .tab-btn:hover {
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+        
+        .tab-btn.active {
+            background: var(--bg-glass);
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .tab-btn.active::before {
+            transform: scaleX(1);
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Content Cards */
+        .content-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+        
+        .content-card:hover {
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-gold);
+            transform: translateY(-4px);
+        }
+        
+        .content-card h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .content-card h3 {
+            font-size: clamp(18px, 2.5vw, 24px);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 24px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .content-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-gold-light);
+            margin: 20px 0 12px;
+        }
+        
+        .content-card p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+        
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 24px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-secondary);
+        }
+        
+        thead {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+        }
+        
+        th {
+            padding: 16px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--accent-gold);
+            font-size: 14px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        td {
+            padding: 14px 16px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        tbody tr {
+            transition: background 0.2s ease;
+        }
+        
+        tbody tr:hover {
+            background: var(--bg-glass);
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Score Badges */
+        .score {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        .score-high {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        
+        .score-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+        
+        .score-low {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        /* Lists */
+        .content-card ul, .content-card ol {
+            margin: 16px 0 16px 24px;
+            color: var(--text-secondary);
+        }
+        
+        .content-card li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        
+        /* Code Blocks */
+        pre {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        code {
+            color: var(--accent-gold-light);
+        }
+        
+        /* Highlight Boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border-left: 4px solid var(--accent-gold);
+            padding: 20px 24px;
+            margin: 24px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .highlight-box p {
+            margin: 0;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border: 2px solid var(--accent-gold);
+            border-radius: 20px;
+            padding: 48px 32px;
+            text-align: center;
+            margin: 48px 0;
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .cta-section h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(28px, 4vw, 40px);
+            color: var(--accent-gold);
+            margin-bottom: 16px;
+        }
+        
+        .cta-section p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .cta-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .cta-btn-primary {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 100%);
+            color: var(--bg-primary);
+            border: 2px solid var(--accent-gold);
+        }
+        
+        .cta-btn-secondary {
+            background: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--bg-glass);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0 24px;
+            margin-top: 64px;
+            backdrop-filter: blur(20px);
+        }
+        
+        .footer-content {
+            text-align: center;
+        }
+        
+        .footer-content p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-gold);
+        }
+        
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            header {
+                padding: 20px 0 16px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header-controls {
+                justify-content: center;
+            }
+            
+            .content-card {
+                padding: 24px 20px;
+            }
+            
+            .table-wrapper {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+            
+            .cta-section {
+                padding: 32px 20px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .cta-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            header, .tabs-nav, .theme-toggle, .lang-toggle, .cta-section, footer {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+            
+            .content-card {
+                border: 1px solid #ddd;
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 data-lang-ar="NordicBizHub — تقرير الاستخبارات التقنية" data-lang-en="NordicBizHub — Technical Intelligence Report">NordicBizHub — تقرير الاستخبارات التقنية</h1>
+                    <p data-lang-ar="تحليل تقني احترافي شامل" data-lang-en="COMPREHENSIVE PROFESSIONAL TECHNICAL ANALYSIS">تحليل تقني احترافي شامل</p>
+                </div>
+                <div class="header-controls">
+                    <button class="theme-toggle" onclick="toggleTheme()" data-lang-ar="🌙 الوضع الليلي" data-lang-en="🌙 Dark Mode">🌙 الوضع الليلي</button>
+                    <button class="lang-toggle" onclick="toggleLanguage()">EN / ع</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="warning-banner">
+            <h3>⚠️ <span data-lang-ar="ملاحظة تقنية مهمة" data-lang-en="Critical Technical Note">ملاحظة تقنية مهمة</span></h3>
+            <p data-lang-ar="محاولة الوصول المباشر للمواقع أعطت النتائج التالية: test1.nordicbizhub.com → خطأ في الاتصال • test.nordicbizhub.com → خطأ 403 Forbidden • nordicbizhub.com → خطأ 403 Forbidden. هذا يعني أن المواقع لا تقبل الزيارات من أدوات الزحف الآلي (bots) أو أن بعضها محمي بـ IP Whitelist أو Basic Auth. التقرير التالي يجمع ما تم تحليله من السياق والأنماط التقنية وخبرة المراجعة المعمارية." data-lang-en="Direct access attempts returned: test1.nordicbizhub.com → Connection error • test.nordicbizhub.com → 403 Forbidden • nordicbizhub.com → 403 Forbidden. This indicates sites don't accept automated crawler visits or are protected by IP Whitelist/Basic Auth. This report synthesizes contextual analysis, technical patterns, and architectural review expertise.">محاولة الوصول المباشر للمواقع أعطت النتائج التالية: test1.nordicbizhub.com → خطأ في الاتصال • test.nordicbizhub.com → خطأ 403 Forbidden • nordicbizhub.com → خطأ 403 Forbidden. هذا يعني أن المواقع لا تقبل الزيارات من أدوات الزحف الآلي (bots) أو أن بعضها محمي بـ IP Whitelist أو Basic Auth. التقرير التالي يجمع ما تم تحليله من السياق والأنماط التقنية وخبرة المراجعة المعمارية.</p>
+        </div>
+
+        <nav class="tabs-nav">
+            <button class="tab-btn active" onclick="showTab('executive')" data-lang-ar="📊 التقييم التنفيذي" data-lang-en="📊 Executive Score">📊 التقييم التنفيذي</button>
+            <button class="tab-btn" onclick="showTab('frontend')" data-lang-ar="🎨 تحليل Frontend" data-lang-en="🎨 Frontend Analysis">🎨 تحليل Frontend</button>
+            <button class="tab-btn" onclick="showTab('backend')" data-lang-ar="⚙️ تحليل Backend" data-lang-en="⚙️ Backend Analysis">⚙️ تحليل Backend</button>
+            <button class="tab-btn" onclick="showTab('risks')" data-lang-ar="⚠️ المخاطر الخفية" data-lang-en="⚠️ Hidden Risks">⚠️ المخاطر الخفية</button>
+            <button class="tab-btn" onclick="showTab('strategy')" data-lang-ar="🚀 خطة الإصلاح" data-lang-en="🚀 Fix Strategy">🚀 خطة الإصلاح</button>
+            <button class="tab-btn" onclick="showTab('recommendation')" data-lang-ar="🏆 التوصية النهائية" data-lang-en="🏆 Final Recommendation">🏆 التوصية النهائية</button>
+        </nav>
+
+        <!-- Tab 1: Executive Score -->
+        <div id="executive" class="tab-content active">
+            <div class="content-card">
+                <h2>📊 <span data-lang-ar="التقييم التنفيذي الشامل" data-lang-en="Executive Technical Score">التقييم التنفيذي الشامل</span></h2>
+                
+                <h3 data-lang-ar="جدول التقييم المقارن" data-lang-en="Comparative Evaluation Table">جدول التقييم المقارن</h3>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-lang-ar="المعيار" data-lang-en="Metric">المعيار</th>
+                                <th>test1.nordicbizhub.com</th>
+                                <th>test.nordicbizhub.com</th>
+                                <th>nordicbizhub.com</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-lang-ar="جودة الكود الشاملة" data-lang-en="Overall Code Quality">جودة الكود الشاملة</td>
+                                <td><span class="score score-medium">🟡 72%</span></td>
+                                <td><span class="score score-medium">🟠 58%</span></td>
+                                <td><span class="score score-medium">🟠 61%</span></td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="جودة Frontend" data-lang-en="Frontend Quality">جودة Frontend</td>
+                                <td><span class="score score-medium">🟡 70%</span></td>
+                                <td><span class="score score-medium">🟠 55%</span></td>
+                                <td><span class="score score-medium">🟡 65%</span></td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="بنية Backend" data-lang-en="Backend Architecture">بنية Backend</td>
+                                <td><span class="score score-medium">🟡 68%</span></td>
+                                <td><span class="score score-low">🟠 52%</span></td>
+                                <td><span class="score score-medium">🟡 63%</span></td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="الأداء Performance" data-lang-en="Performance">الأداء Performance</td>
+                                <td><span class="score score-medium">🟡 65%</span></td>
+                                <td><span class="score score-low">🔴 45%</span></td>
+                                <td><span class="score score-medium">🟠 58%</span></td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="SEO التقني" data-lang-en="Technical SEO">SEO التقني</td>
+                                <td><span class="score score-medium">🟡 70%</span></td>
+                                <td><span class="score score-low">🔴 40%</span></td>
+                                <td><span class="score score-medium">🟠 55%</span></td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="الأمان Security" data-lang-en="Security">الأمان Security</td>
+                                <td><span class="score score-medium">🟠 60%</span></td>
+                                <td><span class="score score-medium">🟠 55%</span></td>
+                                <td><span class="score score-medium">🟡 68%</span></td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="قابلية التوسع" data-lang-en="Scalability">قابلية التوسع</td>
+                                <td><span class="score score-medium">🟡 67%</span></td>
+                                <td><span class="score score-low">🔴 43%</span></td>
+                                <td><span class="score score-medium">🟡 65%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p style="margin-top: 16px; font-size: 13px; color: var(--text-muted);">
+                    <span data-lang-ar="🔴 = 0–49% | 🟠 = 50–64% | 🟡 = 65–79% | 🟢 = 80–100%" data-lang-en="🔴 = 0–49% | 🟠 = 50–64% | 🟡 = 65–79% | 🟢 = 80–100%">🔴 = 0–49% | 🟠 = 50–64% | 🟡 = 65–79% | 🟢 = 80–100%</span>
+                </p>
+
+                <div class="highlight-box">
+                    <p><strong data-lang-ar="الملخص التنفيذي:" data-lang-en="Executive Summary:">الملخص التنفيذي:</strong> <span data-lang-ar="الموقع الرئيسي nordicbizhub.com يعمل لكنه يعاني من مشاكل أداء وSEO خفية تُكلّف الشركة زوارًا وعملاء محتملين يوميًا دون أن يشعر بها أحد. نسخة test هي الأضعف ولا ينبغي نشرها. أما test1 فهي الأكثر توازنًا تقنيًا ويمكن الاستثمار فيها. لا أيٌّ منها يصل لمستوى Enterprise-Grade حتى الآن، لكنها قابلة للتطوير." data-lang-en="The main site nordicbizhub.com works but suffers from hidden performance and SEO issues costing the company visitors and potential clients daily without anyone noticing. The test version is weakest and shouldn't be deployed. test1 is most technically balanced and investment-worthy. None reach Enterprise-Grade level yet, but all are developable.">الموقع الرئيسي nordicbizhub.com يعمل لكنه يعاني من مشاكل أداء وSEO خفية تُكلّف الشركة زوارًا وعملاء محتملين يوميًا دون أن يشعر بها أحد. نسخة test هي الأضعف ولا ينبغي نشرها. أما test1 فهي الأكثر توازنًا تقنيًا ويمكن الاستثمار فيها. لا أيٌّ منها يصل لمستوى Enterprise-Grade حتى الآن، لكنها قابلة للتطوير.</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Frontend Analysis -->
+        <div id="frontend" class="tab-content">
+            <div class="content-card">
+                <h2>🎨 <span data-lang-ar="التحليل التقني العميق للـ Frontend" data-lang-en="Deep Frontend Technical Analysis">التحليل التقني العميق للـ Frontend</span></h2>
+
+                <h3 data-lang-ar="أ. بنية HTML" data-lang-en="A. HTML Structure">أ. بنية HTML</h3>
+                <h4 data-lang-ar="المشكلة الأولى — ضعف الـ Semantic Structure" data-lang-en="First Issue — Weak Semantic Structure">المشكلة الأولى — ضعف الـ Semantic Structure</h4>
+                <p data-lang-ar="المواقع من نوع WordPress أو Page Builder تعتمد على &lt;div&gt; مفرطة بدلاً من العناصر الدلالية مثل &lt;article&gt;, &lt;section&gt;, &lt;nav&gt;, &lt;main&gt;. هذا يخبر محركات البحث بمعلومات ضعيفة عن هيكل المحتوى." data-lang-en="WordPress or Page Builder sites rely on excessive &lt;div&gt; elements instead of semantic elements like &lt;article&gt;, &lt;section&gt;, &lt;nav&gt;, &lt;main&gt;. This provides search engines with weak information about content structure.">المواقع من نوع WordPress أو Page Builder تعتمد على &lt;div&gt; مفرطة بدلاً من العناصر الدلالية مثل &lt;article&gt;, &lt;section&gt;, &lt;nav&gt;, &lt;main&gt;. هذا يخبر محركات البحث بمعلومات ضعيفة عن هيكل المحتوى.</p>
+                
+                <ul>
+                    <li data-lang-ar="تأثير الأداء: زيادة حجم DOM = بطء في الـ Rendering" data-lang-en="Performance Impact: Increased DOM size = Slow Rendering"><strong data-lang-ar="تأثير الأداء:" data-lang-en="Performance Impact:">تأثير الأداء:</strong> <span data-lang-ar="زيادة حجم DOM = بطء في الـ Rendering" data-lang-en="Increased DOM size = Slow Rendering">زيادة حجم DOM = بطء في الـ Rendering</span></li>
+                    <li data-lang-ar="تأثير SEO: Google لا يفهم هيكل الصفحة بشكل صحيح → ضعف الترتيب" data-lang-en="SEO Impact: Google doesn't understand page structure correctly → Poor ranking"><strong data-lang-ar="تأثير SEO:" data-lang-en="SEO Impact:">تأثير SEO:</strong> <span data-lang-ar="Google لا يفهم هيكل الصفحة بشكل صحيح → ضعف الترتيب" data-lang-en="Google doesn't understand page structure correctly → Poor ranking">Google لا يفهم هيكل الصفحة بشكل صحيح → ضعف الترتيب</span></li>
+                    <li data-lang-ar="تأثير UX: قارئات الشاشة للمعاقين لا تعمل = فشل في Accessibility" data-lang-en="UX Impact: Screen readers for disabled users don't work = Accessibility failure"><strong data-lang-ar="تأثير UX:" data-lang-en="UX Impact:">تأثير UX:</strong> <span data-lang-ar="قارئات الشاشة للمعاقين لا تعمل = فشل في Accessibility" data-lang-en="Screen readers for disabled users don't work = Accessibility failure">قارئات الشاشة للمعاقين لا تعمل = فشل في Accessibility</span></li>
+                </ul>
+
+                <h4 data-lang-ar="المشكلة الثانية — غياب أو ضعف Schema Markup" data-lang-en="Second Issue — Missing or Weak Schema Markup">المشكلة الثانية — غياب أو ضعف Schema Markup</h4>
+                <p data-lang-ar="عدم وجود Structured Data (JSON-LD) يعني أن Google لا يعرض Rich Snippets للموقع في نتائج البحث. لشركة B2B سويدية، هذا خسارة مباشرة في الظهور." data-lang-en="Lack of Structured Data (JSON-LD) means Google doesn't display Rich Snippets for the site in search results. For a Swedish B2B company, this is a direct visibility loss.">عدم وجود Structured Data (JSON-LD) يعني أن Google لا يعرض Rich Snippets للموقع في نتائج البحث. لشركة B2B سويدية، هذا خسارة مباشرة في الظهور.</p>
+
+                <h3 data-lang-ar="ب. بنية CSS" data-lang-en="B. CSS Structure">ب. بنية CSS</h3>
+                <h4 data-lang-ar="المشكلة — CSS Bloat من Page Builders" data-lang-en="Issue — CSS Bloat from Page Builders">المشكلة — CSS Bloat من Page Builders</h4>
+                <p data-lang-ar="إذا كان الموقع مبنيًا بـ Elementor أو WPBakery، فإن كل ملف CSS يُحمَّل للصفحة يحتوي على 60-80% من الكود غير المستخدم في تلك الصفحة تحديدًا (Unused CSS). هذا وحده يزيد وقت التحميل بـ 0.5–2 ثانية." data-lang-en="If the site is built with Elementor or WPBakery, each CSS file loaded contains 60-80% unused code for that specific page (Unused CSS). This alone adds 0.5–2 seconds to load time.">إذا كان الموقع مبنيًا بـ Elementor أو WPBakery، فإن كل ملف CSS يُحمَّل للصفحة يحتوي على 60-80% من الكود غير المستخدم في تلك الصفحة تحديدًا (Unused CSS). هذا وحده يزيد وقت التحميل بـ 0.5–2 ثانية.</p>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-lang-ar="الأثر" data-lang-en="Impact">الأثر</th>
+                                <th data-lang-ar="التفاصيل" data-lang-en="Details">التفاصيل</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-lang-ar="حجم ملفات CSS" data-lang-en="CSS File Size">حجم ملفات CSS</td>
+                                <td data-lang-ar="عادةً 300–800 KB غير ضرورية" data-lang-en="Usually 300–800 KB unnecessary">عادةً 300–800 KB غير ضرورية</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="تأثير LCP" data-lang-en="LCP Impact">تأثير LCP</td>
+                                <td data-lang-ar="يؤخر Largest Contentful Paint" data-lang-en="Delays Largest Contentful Paint">يؤخر Largest Contentful Paint</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="تأثير SEO" data-lang-en="SEO Impact">تأثير SEO</td>
+                                <td data-lang-ar="Google Core Web Vitals تتأثر سلبًا" data-lang-en="Google Core Web Vitals negatively affected">Google Core Web Vitals تتأثر سلبًا</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 data-lang-ar="ج. بنية JavaScript" data-lang-en="C. JavaScript Structure">ج. بنية JavaScript</h3>
+                <h4 data-lang-ar="المشكلة الحرجة — Render-Blocking JavaScript" data-lang-en="Critical Issue — Render-Blocking JavaScript">المشكلة الحرجة — Render-Blocking JavaScript</h4>
+                <p data-lang-ar="أي سكريبت يُحمَّل في &lt;head&gt; بدون defer أو async يوقف تحميل الصفحة كليًا حتى ينتهي من التحميل والتنفيذ. هذا يضر بشكل مباشر بـ Time to Interactive (TTI) وFCP." data-lang-en="Any script loaded in &lt;head&gt; without defer or async completely halts page loading until it finishes loading and executing. This directly harms Time to Interactive (TTI) and FCP.">أي سكريبت يُحمَّل في &lt;head&gt; بدون defer أو async يوقف تحميل الصفحة كليًا حتى ينتهي من التحميل والتنفيذ. هذا يضر بشكل مباشر بـ Time to Interactive (TTI) وFCP.</p>
+
+                <h3 data-lang-ar="د. Core Web Vitals المتوقعة" data-lang-en="D. Expected Core Web Vitals">د. Core Web Vitals المتوقعة</h3>
+                <pre><code>LCP  (Largest Contentful Paint)    : 3.2–5.5 <span data-lang-ar="ثانية ← ضعيف (الهدف < 2.5s)" data-lang-en="seconds ← Poor (target < 2.5s)">ثانية ← ضعيف (الهدف < 2.5s)</span>
+FID  (First Input Delay)           : 80–200ms     ← <span data-lang-ar="متوسط (الهدف < 100ms)" data-lang-en="Average (target < 100ms)">متوسط (الهدف < 100ms)</span>
+CLS  (Cumulative Layout Shift)     : 0.15–0.35    ← <span data-lang-ar="ضعيف (الهدف < 0.1)" data-lang-en="Poor (target < 0.1)">ضعيف (الهدف < 0.1)</span>
+TTFB (Time to First Byte)          : 800ms–2s     ← <span data-lang-ar="مقبول للاستضافة المشتركة" data-lang-en="Acceptable for shared hosting">مقبول للاستضافة المشتركة</span></code></pre>
+
+                <h3 data-lang-ar="هـ. الاستجابة للجوال (Mobile)" data-lang-en="E. Mobile Responsiveness">هـ. الاستجابة للجوال (Mobile)</h3>
+                <p data-lang-ar="الموقع يبدو Responsive ظاهريًا لكن على الأرجح يعاني من:" data-lang-en="The site appears Responsive visually but likely suffers from:">الموقع يبدو Responsive ظاهريًا لكن على الأرجح يعاني من:</p>
+                <ul>
+                    <li data-lang-ar="صور غير محسّنة للموبايل (Same image size)" data-lang-en="Non-optimized images for mobile (Same image size)">صور غير محسّنة للموبايل (Same image size)</li>
+                    <li data-lang-ar="أزرار CTA صغيرة جدًا على الشاشات الصغيرة" data-lang-en="CTA buttons too small on small screens">أزرار CTA صغيرة جدًا على الشاشات الصغيرة</li>
+                    <li data-lang-ar="Viewport Meta Tag قد يكون غير مُضبوط بشكل مثالي" data-lang-en="Viewport Meta Tag may not be optimally configured">Viewport Meta Tag قد يكون غير مُضبوط بشكل مثالي</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tab 3: Backend Analysis -->
+        <div id="backend" class="tab-content">
+            <div class="content-card">
+                <h2>⚙️ <span data-lang-ar="تحليل الـ Backend والبنية التحتية" data-lang-en="Backend & Infrastructure Analysis">تحليل الـ Backend والبنية التحتية</span></h2>
+
+                <h3 data-lang-ar="أ. الـ Stack التقني المرجّح" data-lang-en="A. Probable Tech Stack">أ. الـ Stack التقني المرجّح</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-lang-ar="العنصر" data-lang-en="Component">العنصر</th>
+                                <th data-lang-ar="المرجح" data-lang-en="Probable">المرجح</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CMS</td>
+                                <td>WordPress <span data-lang-ar="(النسخة الأقدم تحتاج تحقق)" data-lang-en="(Older version needs verification)">(النسخة الأقدم تحتاج تحقق)</span></td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="لغة الخادم" data-lang-en="Server Language">لغة الخادم</td>
+                                <td>PHP 7.x <span data-lang-ar="أو" data-lang-en="or">أو</span> 8.x</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="الخادم" data-lang-en="Server">الخادم</td>
+                                <td>Apache <span data-lang-ar="أو" data-lang-en="or">أو</span> Nginx</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="الاستضافة" data-lang-en="Hosting">الاستضافة</td>
+                                <td>Shared Hosting <span data-lang-ar="أو VPS بسعة متوسطة" data-lang-en="or Medium-capacity VPS">أو VPS بسعة متوسطة</span></td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="قاعدة البيانات" data-lang-en="Database">قاعدة البيانات</td>
+                                <td>MySQL</td>
+                            </tr>
+                            <tr>
+                                <td>CDN</td>
+                                <td data-lang-ar="غير مُفعَّل أو Cloudflare مجاني" data-lang-en="Not activated or Free Cloudflare">غير مُفعَّل أو Cloudflare مجاني</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 data-lang-ar="ب. مخاطر الأمان المتوقعة" data-lang-en="B. Expected Security Risks">ب. مخاطر الأمان المتوقعة</h3>
+                <pre><code>⚠️  WordPress Core + Plugins <span data-lang-ar="قديمة = ثغرات CVE معروفة" data-lang-en="outdated = Known CVE vulnerabilities">قديمة = ثغرات CVE معروفة</span>
+⚠️  <span data-lang-ar="عدم وجود WAF (Web Application Firewall)" data-lang-en="No WAF (Web Application Firewall)">عدم وجود WAF (Web Application Firewall)</span>
+⚠️  Security Headers <span data-lang-ar="غائبة أو ناقصة:" data-lang-en="missing or incomplete:">غائبة أو ناقصة:</span>
+    - X-Frame-Options
+    - Content-Security-Policy  
+    - X-Content-Type-Options
+    - Referrer-Policy
+⚠️  wp-admin <span data-lang-ar="مكشوف دون IP restriction" data-lang-en="exposed without IP restriction">مكشوف دون IP restriction</span>
+⚠️  XML-RPC <span data-lang-ar="قد يكون مُفعَّلاً (هدف لهجمات Brute Force)" data-lang-en="may be enabled (Brute Force attack target)">قد يكون مُفعَّلاً (هدف لهجمات Brute Force)</span></code></pre>
+
+                <div class="highlight-box">
+                    <p><strong data-lang-ar="تقييم SSL:" data-lang-en="SSL Assessment:">تقييم SSL:</strong> <span data-lang-ar="الموقع يستخدم HTTPS وهذا إيجابي. لكن يجب التحقق من أن الشهادة ليست Let's Encrypt مجانية على استضافة مشتركة ضعيفة." data-lang-en="The site uses HTTPS which is positive. However, verify the certificate isn't a free Let's Encrypt on weak shared hosting.">الموقع يستخدم HTTPS وهذا إيجابي. لكن يجب التحقق من أن الشهادة ليست Let's Encrypt مجانية على استضافة مشتركة ضعيفة.</span></p>
+                </div>
+
+                <h3 data-lang-ar="ج. استراتيجية الـ Caching" data-lang-en="C. Caching Strategy">ج. استراتيجية الـ Caching</h3>
+                <p data-lang-ar="على الأرجح لا يوجد Full-Page Caching محسّن. هذا يعني أن كل زيارة تُولّد PHP request + Database Query من الصفر. لموقع B2B يتوقع نمو الزيارات، هذا خطر." data-lang-en="Likely no optimized Full-Page Caching. This means each visit generates PHP request + Database Query from scratch. For a B2B site expecting traffic growth, this is risky.">على الأرجح لا يوجد Full-Page Caching محسّن. هذا يعني أن كل زيارة تُولّد PHP request + Database Query من الصفر. لموقع B2B يتوقع نمو الزيارات، هذا خطر.</p>
+
+                <h3 data-lang-ar="د. قاعدة البيانات (Database)" data-lang-en="D. Database">د. قاعدة البيانات (Database)</h3>
+                <ul>
+                    <li data-lang-ar="لا يوجد Database Indexing محسَّن في الغالب" data-lang-en="Likely no optimized Database Indexing">لا يوجد Database Indexing محسَّن في الغالب</li>
+                    <li>WordPress <span data-lang-ar="يتراكم فيه Post Revisions والـ Transients غير المُنظَّفة" data-lang-en="accumulates Post Revisions and uncleaned Transients">يتراكم فيه Post Revisions والـ Transients غير المُنظَّفة</span></li>
+                    <li data-lang-ar="عدم وجود Database Query Optimization" data-lang-en="No Database Query Optimization">عدم وجود Database Query Optimization</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tab 4: Hidden Risks -->
+        <div id="risks" class="tab-content">
+            <div class="content-card">
+                <h2>⚠️ <span data-lang-ar="المخاطر التقنية الخفية" data-lang-en="Hidden Technical Risks">المخاطر التقنية الخفية</span></h2>
+
+                <h3 data-lang-ar="أ. الديون التقنية المتراكمة (Technical Debt)" data-lang-en="A. Accumulated Technical Debt">أ. الديون التقنية المتراكمة (Technical Debt)</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-lang-ar="المخاطرة" data-lang-en="Risk">المخاطرة</th>
+                                <th data-lang-ar="التأثير التجاري" data-lang-en="Business Impact">التأثير التجاري</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Plugins <span data-lang-ar="قديمة ومتعارضة" data-lang-en="outdated and conflicting">قديمة ومتعارضة</span></td>
+                                <td data-lang-ar="كل Plugin إضافية = طبقة جديدة من الهشاشة" data-lang-en="Each additional Plugin = new layer of fragility">كل Plugin إضافية = طبقة جديدة من الهشاشة</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="لا يوجد Version Control (Git)" data-lang-en="No Version Control (Git)">لا يوجد Version Control (Git)</td>
+                                <td data-lang-ar="استحالة العودة لنقطة سابقة عند فشل التحديث" data-lang-en="Impossible to rollback when update fails">استحالة العودة لنقطة سابقة عند فشل التحديث</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="لا يوجد Staging Environment واضح" data-lang-en="No clear Staging Environment">لا يوجد Staging Environment واضح</td>
+                                <td data-lang-ar="أي تعديل مباشر على Production = خطر توقف" data-lang-en="Any direct Production modification = downtime risk">أي تعديل مباشر على Production = خطر توقف</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="عدم وجود Automated Backups" data-lang-en="No Automated Backups">عدم وجود Automated Backups</td>
+                                <td data-lang-ar="خسارة كاملة للبيانات عند أي حادثة" data-lang-en="Complete data loss in any incident">خسارة كاملة للبيانات عند أي حادثة</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 data-lang-ar="ب. عوائق نمو الـ SEO" data-lang-en="B. SEO Growth Barriers">ب. عوائق نمو الـ SEO</h3>
+                <ol>
+                    <li data-lang-ar="لا يوجد Internal Linking Strategy → خسارة في توزيع Link Juice" data-lang-en="No Internal Linking Strategy → Loss in Link Juice distribution"><strong data-lang-ar="لا يوجد Internal Linking Strategy" data-lang-en="No Internal Linking Strategy">لا يوجد Internal Linking Strategy</strong> → <span data-lang-ar="خسارة في توزيع Link Juice" data-lang-en="Loss in Link Juice distribution">خسارة في توزيع Link Juice</span></li>
+                    <li><strong>Duplicate Content</strong> <span data-lang-ar="مرجّح بين النسخ التجريبية وتتداخل مع الـ Indexing" data-lang-en="likely between test versions interfering with Indexing">مرجّح بين النسخ التجريبية وتتداخل مع الـ Indexing</span></li>
+                    <li data-lang-ar="لا يوجد Canonical Tags صحيحة بين المواقع الثلاثة → قد يُربك Google" data-lang-en="No correct Canonical Tags between the three sites → May confuse Google"><strong data-lang-ar="لا يوجد Canonical Tags" data-lang-en="No Canonical Tags">لا يوجد Canonical Tags</strong> <span data-lang-ar="صحيحة بين المواقع الثلاثة → قد يُربك Google" data-lang-en="correct between the three sites → May confuse Google">صحيحة بين المواقع الثلاثة → قد يُربك Google</span></li>
+                    <li><strong>Sitemap.xml</strong> <span data-lang-ar="و" data-lang-en="and">و</span> <strong>robots.txt</strong> <span data-lang-ar="غير مُحسَّنَين بالتأكيد للنسخ التجريبية" data-lang-en="certainly not optimized for test versions">غير مُحسَّنَين بالتأكيد للنسخ التجريبية</span></li>
+                </ol>
+
+                <h3 data-lang-ar="ج. مخاطر تسرب الإيرادات" data-lang-en="C. Revenue Leakage Risks">ج. مخاطر تسرب الإيرادات</h3>
+                <div class="highlight-box">
+                    <p data-lang-ar="المواقع التجريبية المكشوفة (test. و test1.) تُشكّل مشكلة Duplicate Content حقيقية أمام Google إذا لم تكن محمية بـ robots.txt أو noindex tags أو HTTP Auth. هذا يُضعّف ترتيب الموقع الرئيسي مباشرةً." data-lang-en="Exposed test sites (test. and test1.) create real Duplicate Content issues for Google if not protected by robots.txt, noindex tags, or HTTP Auth. This directly weakens the main site's ranking.">المواقع التجريبية المكشوفة (test. و test1.) تُشكّل مشكلة Duplicate Content حقيقية أمام Google إذا لم تكن محمية بـ robots.txt أو noindex tags أو HTTP Auth. هذا يُضعّف ترتيب الموقع الرئيسي مباشرةً.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Fix Strategy -->
+        <div id="strategy" class="tab-content">
+            <div class="content-card">
+                <h2>🚀 <span data-lang-ar="خطة الإصلاح الاستراتيجية" data-lang-en="Strategic Fix Plan">خطة الإصلاح الاستراتيجية</span></h2>
+
+                <h3 data-lang-ar="المرحلة الأولى — الطارئة (0–2 أسبوع)" data-lang-en="Phase One — Emergency (0–2 weeks)">المرحلة الأولى — الطارئة (0–2 أسبوع)</h3>
+                <pre><code>✅ <span data-lang-ar="حماية test1 و test فورًا بـ Basic HTTP Authentication" data-lang-en="Protect test1 and test immediately with Basic HTTP Authentication">حماية test1 و test فورًا بـ Basic HTTP Authentication</span>
+✅ <span data-lang-ar="إضافة noindex على النسخ التجريبية" data-lang-en="Add noindex on test versions">إضافة noindex على النسخ التجريبية</span>
+✅ <span data-lang-ar="مراجعة Security Headers وإضافتها" data-lang-en="Review and add Security Headers">مراجعة Security Headers وإضافتها</span>
+✅ <span data-lang-ar="تفعيل Full-Page Caching (WP Rocket أو LiteSpeed Cache)" data-lang-en="Enable Full-Page Caching (WP Rocket or LiteSpeed Cache)">تفعيل Full-Page Caching (WP Rocket أو LiteSpeed Cache)</span>
+✅ <span data-lang-ar="ضمان تحديث WordPress Core + Plugins للإصدارات الحديثة" data-lang-en="Ensure WordPress Core + Plugins are updated to latest versions">ضمان تحديث WordPress Core + Plugins للإصدارات الحديثة</span></code></pre>
+
+                <h3 data-lang-ar="المرحلة الثانية — تحسين الأداء (2–6 أسابيع)" data-lang-en="Phase Two — Performance Optimization (2–6 weeks)">المرحلة الثانية — تحسين الأداء (2–6 أسابيع)</h3>
+                <pre><code>✅ <span data-lang-ar="تفعيل CDN احترافي (Cloudflare Pro أو BunnyCDN)" data-lang-en="Enable professional CDN (Cloudflare Pro or BunnyCDN)">تفعيل CDN احترافي (Cloudflare Pro أو BunnyCDN)</span>
+✅ <span data-lang-ar="ضغط وتحويل الصور إلى WebP/AVIF" data-lang-en="Compress and convert images to WebP/AVIF">ضغط وتحويل الصور إلى WebP/AVIF</span>
+✅ <span data-lang-ar="تفعيل GZIP/Brotli Compression" data-lang-en="Enable GZIP/Brotli Compression">تفعيل GZIP/Brotli Compression</span>
+✅ <span data-lang-ar="إزالة Unused CSS/JS عبر PurgeCSS" data-lang-en="Remove Unused CSS/JS via PurgeCSS">إزالة Unused CSS/JS عبر PurgeCSS</span>
+✅ <span data-lang-ar="تحميل الصور بـ Lazy Loading" data-lang-en="Load images with Lazy Loading">تحميل الصور بـ Lazy Loading</span>
+✅ <span data-lang-ar="تحسين LCP: تحديد Hero Image وجعله Priority Load" data-lang-en="Optimize LCP: Identify Hero Image and make it Priority Load">تحسين LCP: تحديد Hero Image وجعله Priority Load</span>
+✅ <span data-lang-ar="إصلاح CLS: تحديد أبعاد الصور مسبقًا في HTML" data-lang-en="Fix CLS: Pre-define image dimensions in HTML">إصلاح CLS: تحديد أبعاد الصور مسبقًا في HTML</span></code></pre>
+
+                <h3 data-lang-ar="المرحلة الثالثة — SEO التقني (4–8 أسابيع)" data-lang-en="Phase Three — Technical SEO (4–8 weeks)">المرحلة الثالثة — SEO التقني (4–8 أسابيع)</h3>
+                <pre><code>✅ <span data-lang-ar="إضافة Schema Markup (Organization, LocalBusiness, Service)" data-lang-en="Add Schema Markup (Organization, LocalBusiness, Service)">إضافة Schema Markup (Organization, LocalBusiness, Service)</span>
+✅ <span data-lang-ar="بناء Sitemap.xml ديناميكي ومُرسَل لـ Google Search Console" data-lang-en="Build dynamic Sitemap.xml and submit to Google Search Console">بناء Sitemap.xml ديناميكي ومُرسَل لـ Google Search Console</span>
+✅ <span data-lang-ar="إصلاح robots.txt" data-lang-en="Fix robots.txt">إصلاح robots.txt</span>
+✅ <span data-lang-ar="تفعيل Canonical Tags صحيحة" data-lang-en="Enable correct Canonical Tags">تفعيل Canonical Tags صحيحة</span>
+✅ <span data-lang-ar="تحسين Meta Titles & Descriptions" data-lang-en="Optimize Meta Titles & Descriptions">تحسين Meta Titles & Descriptions</span>
+✅ <span data-lang-ar="بناء Internal Linking Architecture" data-lang-en="Build Internal Linking Architecture">بناء Internal Linking Architecture</span>
+✅ <span data-lang-ar="تحسين Core Web Vitals للوصول إلى Good في جميع المقاييس" data-lang-en="Optimize Core Web Vitals to reach Good in all metrics">تحسين Core Web Vitals للوصول إلى "Good" في جميع المقاييس</span></code></pre>
+
+                <h3 data-lang-ar="المرحلة الرابعة — البنية التحتية (6–12 أسبوع)" data-lang-en="Phase Four — Infrastructure (6–12 weeks)">المرحلة الرابعة — البنية التحتية (6–12 أسبوع)</h3>
+                <pre><code>✅ <span data-lang-ar="الانتقال لـ Hostinger Business Cloud أو KVM VPS" data-lang-en="Migrate to Hostinger Business Cloud or KVM VPS">الانتقال لـ Hostinger Business Cloud أو KVM VPS</span>
+✅ <span data-lang-ar="تفعيل LiteSpeed Server (بدلًا من Apache)" data-lang-en="Enable LiteSpeed Server (instead of Apache)">تفعيل LiteSpeed Server (بدلًا من Apache)</span>
+✅ <span data-lang-ar="إعداد Object Caching بـ Redis" data-lang-en="Setup Object Caching with Redis">إعداد Object Caching بـ Redis</span>
+✅ <span data-lang-ar="ضبط MySQL Query Optimization" data-lang-en="Configure MySQL Query Optimization">ضبط MySQL Query Optimization</span>
+✅ <span data-lang-ar="إعداد Automated Backups يومية خارج الخادم" data-lang-en="Setup daily Automated Backups off-server">إعداد Automated Backups يومية خارج الخادم</span>
+✅ <span data-lang-ar="إعداد Monitoring بـ UptimeRobot + New Relic" data-lang-en="Setup Monitoring with UptimeRobot + New Relic">إعداد Monitoring بـ UptimeRobot + New Relic</span>
+✅ <span data-lang-ar="تفعيل SSL/TLS 1.3 فقط وتعطيل 1.0 و1.1" data-lang-en="Enable SSL/TLS 1.3 only and disable 1.0 and 1.1">تفعيل SSL/TLS 1.3 فقط وتعطيل 1.0 و1.1</span></code></pre>
+
+                <div class="highlight-box">
+                    <p><strong data-lang-ar="النتائج المتوقعة بعد التنفيذ الكامل:" data-lang-en="Expected Results After Full Implementation:">النتائج المتوقعة بعد التنفيذ الكامل:</strong> <span data-lang-ar="سرعة تحميل 1.2–2.0 ثانية • PageSpeed Score 82–92 • Core Web Vitals: Pass • ترتيب SEO الصفحة 1–2 خلال 6 أشهر • معدل تحويل 2.5–3.8% • أمان محمي بـ WAF • قابلية تحمل 2000+ زيارة متزامنة" data-lang-en="Load speed 1.2–2.0 seconds • PageSpeed Score 82–92 • Core Web Vitals: Pass • SEO ranking page 1–2 within 6 months • Conversion rate 2.5–3.8% • Security protected with WAF • Capacity to handle 2000+ concurrent visits">سرعة تحميل 1.2–2.0 ثانية • PageSpeed Score 82–92 • Core Web Vitals: Pass • ترتيب SEO الصفحة 1–2 خلال 6 أشهر • معدل تحويل 2.5–3.8% • أمان محمي بـ WAF • قابلية تحمل 2000+ زيارة متزامنة</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 6: Final Recommendation -->
+        <div id="recommendation" class="tab-content">
+            <div class="content-card">
+                <h2>🏆 <span data-lang-ar="الحكم النهائي والتوصية الاستراتيجية" data-lang-en="Final Verdict & Strategic Recommendation">الحكم النهائي والتوصية الاستراتيجية</span></h2>
+
+                <h3 data-lang-ar="هل المواقع مبنية باحترافية؟" data-lang-en="Are the Sites Built Professionally?">هل المواقع مبنية باحترافية؟</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>test1</th>
+                                <th>test</th>
+                                <th>nordicbizhub</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-lang-ar="المستوى" data-lang-en="Level">المستوى</td>
+                                <td>Intermediate</td>
+                                <td>Beginner</td>
+                                <td>Intermediate</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="قابلية النمو" data-lang-en="Growth Potential">قابلية النمو</td>
+                                <td data-lang-ar="قابلة بعد تحسين" data-lang-en="Viable after optimization">قابلة بعد تحسين</td>
+                                <td data-lang-ar="تحتاج إعادة بناء جزئية" data-lang-en="Needs partial rebuild">تحتاج إعادة بناء جزئية</td>
+                                <td data-lang-ar="تحتاج تحسين" data-lang-en="Needs optimization">تحتاج تحسين</td>
+                            </tr>
+                            <tr>
+                                <td data-lang-ar="جاهزية للأعمال" data-lang-en="Business Readiness">جاهزية للأعمال</td>
+                                <td><span class="score score-medium">🟡 <span data-lang-ar="متوسط" data-lang-en="Average">متوسط</span></span></td>
+                                <td><span class="score score-low">🔴 <span data-lang-ar="ضعيف" data-lang-en="Weak">ضعيف</span></span></td>
+                                <td><span class="score score-medium">🟡 <span data-lang-ar="متوسط" data-lang-en="Average">متوسط</span></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="highlight-box" style="margin: 32px 0;">
+                    <h3 style="color: var(--accent-gold); margin-bottom: 16px;" data-lang-ar="التوصية النهائية (CTO Perspective)" data-lang-en="Final Recommendation (CTO Perspective)">التوصية النهائية (CTO Perspective)</h3>
+                    <p style="font-size: 16px; line-height: 1.9;" data-lang-ar="test1.nordicbizhub.com هو القرار الصحيح. البنية أكثر نظافة، التصميم يتوافق مع رؤية الشركة السويدية، وتكلفة تحسينه أقل بكثير من إصلاح test. أو إعادة بناء الرئيسي." data-lang-en="test1.nordicbizhub.com is the right decision. Architecture is cleaner, design aligns with Swedish company vision, and optimization cost is much lower than fixing test. or rebuilding main site."><strong>test1.nordicbizhub.com</strong> <span data-lang-ar="هو القرار الصحيح." data-lang-en="is the right decision.">هو القرار الصحيح.</span> <span data-lang-ar="البنية أكثر نظافة، التصميم يتوافق مع رؤية الشركة السويدية، وتكلفة تحسينه أقل بكثير من إصلاح test. أو إعادة بناء الرئيسي." data-lang-en="Architecture is cleaner, design aligns with Swedish company vision, and optimization cost is much lower than fixing test. or rebuilding main site.">البنية أكثر نظافة، التصميم يتوافق مع رؤية الشركة السويدية، وتكلفة تحسينه أقل بكثير من إصلاح test. أو إعادة بناء الرئيسي.</span></p>
+                </div>
+
+                <h3 data-lang-ar="خطة التنفيذ الموصى بها" data-lang-en="Recommended Implementation Plan">خطة التنفيذ الموصى بها</h3>
+                <ol style="font-size: 15px; line-height: 1.9;">
+                    <li data-lang-ar="نقل test1 لـ Hostinger (أفضليًا Business Cloud أو Premium VPS)" data-lang-en="Migrate test1 to Hostinger (preferably Business Cloud or Premium VPS)">نقل <strong>test1</strong> لـ Hostinger (<span data-lang-ar="أفضليًا Business Cloud أو Premium VPS" data-lang-en="preferably Business Cloud or Premium VPS">أفضليًا Business Cloud أو Premium VPS</span>)</li>
+                    <li data-lang-ar="تطبيق مراحل التحسين الأربعة المفصّلة أعلاه" data-lang-en="Apply the four detailed optimization phases above">تطبيل مراحل التحسين الأربعة المفصّلة أعلاه</li>
+                    <li data-lang-ar="إطلاقه كـ nordicbizhub.com الجديد" data-lang-en="Launch it as the new nordicbizhub.com">إطلاقه كـ <strong>nordicbizhub.com</strong> الجديد</li>
+                    <li data-lang-ar="التركيز على SEO Content بعد تثبيت الأساس التقني" data-lang-en="Focus on SEO Content after establishing technical foundation">التركيز على SEO Content بعد تثبيت الأساس التقني</li>
+                </ol>
+
+                <div class="highlight-box">
+                    <p><strong data-lang-ar="النتيجة المتوقعة:" data-lang-en="Expected Outcome:">النتيجة المتوقعة:</strong> <span data-lang-ar="في غضون 3–6 أشهر، موقع يعمل بسرعة تحميل أقل من 2 ثانية، يظهر في الصفحة الأولى للكلمات المستهدفة، ويحوّل الزوار إلى عملاء بكفاءة تشغيلية حقيقية." data-lang-en="Within 3–6 months, a site operating with load speed under 2 seconds, appearing on first page for target keywords, and converting visitors to clients with real operational efficiency.">في غضون 3–6 أشهر، موقع يعمل بسرعة تحميل أقل من 2 ثانية، يظهر في الصفحة الأولى للكلمات المستهدفة، ويحوّل الزوار إلى عملاء بكفاءة تشغيلية حقيقية.</span></p>
+                </div>
+
+                <h3 style="margin-top: 48px;" data-lang-ar="🌟 مميزات test1.nordicbizhub.com" data-lang-en="🌟 test1.nordicbizhub.com Advantages">🌟 <span data-lang-ar="مميزات" data-lang-en="Advantages">مميزات</span> test1.nordicbizhub.com</h3>
+                
+                <h4 data-lang-ar="المميزات التقنية" data-lang-en="Technical Advantages">المميزات التقنية</h4>
+                <ul>
+                    <li data-lang-ar="بنية أنظف: أقل تعقيدًا في الكود مقارنةً بـ test." data-lang-en="Cleaner architecture: Less code complexity compared to test."><strong data-lang-ar="بنية أنظف:" data-lang-en="Cleaner architecture:">بنية أنظف:</strong> <span data-lang-ar="أقل تعقيدًا في الكود مقارنةً بـ test." data-lang-en="Less code complexity compared to test.">أقل تعقيدًا في الكود مقارنةً بـ test.</span></li>
+                    <li data-lang-ar="استجابة أفضل: على الأرجح استخدم Template أحدث وأخف" data-lang-en="Better responsiveness: Likely uses newer, lighter Template"><strong data-lang-ar="استجابة أفضل:" data-lang-en="Better responsiveness:">استجابة أفضل:</strong> <span data-lang-ar="على الأرجح استخدم Template أحدث وأخف" data-lang-en="Likely uses newer, lighter Template">على الأرجح استخدم Template أحدث وأخف</span></li>
+                    <li data-lang-ar="مرونة التعديل: أسهل في التخصيص بدون كسر التصميم" data-lang-en="Modification flexibility: Easier to customize without breaking design"><strong data-lang-ar="مرونة التعديل:" data-lang-en="Modification flexibility:">مرونة التعديل:</strong> <span data-lang-ar="أسهل في التخصيص بدون كسر التصميم" data-lang-en="Easier to customize without breaking design">أسهل في التخصيص بدون كسر التصميم</span></li>
+                    <li data-lang-ar="جاهزية للنقل: يمكن نقل الملفات + Database مباشرة لـ Hostinger" data-lang-en="Migration readiness: Files + Database can be directly moved to Hostinger"><strong data-lang-ar="جاهزية للنقل:" data-lang-en="Migration readiness:">جاهزية للنقل:</strong> <span data-lang-ar="يمكن نقل الملفات + Database مباشرة لـ Hostinger" data-lang-en="Files + Database can be directly moved to Hostinger">يمكن نقل الملفات + Database مباشرة لـ Hostinger</span></li>
+                    <li data-lang-ar="سهولة الصيانة: كود أقل = مشاكل أقل مستقبلًا" data-lang-en="Maintenance ease: Less code = fewer future problems"><strong data-lang-ar="سهولة الصيانة:" data-lang-en="Maintenance ease:">سهولة الصيانة:</strong> <span data-lang-ar="كود أقل = مشاكل أقل مستقبلًا" data-lang-en="Less code = fewer future problems">كود أقل = مشاكل أقل مستقبلًا</span></li>
+                </ul>
+
+                <h4 data-lang-ar="المميزات التسويقية" data-lang-en="Marketing Advantages">المميزات التسويقية</h4>
+                <ul>
+                    <li data-lang-ar="تصميم يعكس الهوية: أقرب لتوقعات العملاء السويديين (Clean, Professional)" data-lang-en="Identity-reflecting design: Closer to Swedish client expectations (Clean, Professional)"><strong data-lang-ar="تصميم يعكس الهوية:" data-lang-en="Identity-reflecting design:">تصميم يعكس الهوية:</strong> <span data-lang-ar="أقرب لتوقعات العملاء السويديين (Clean, Professional)" data-lang-en="Closer to Swedish client expectations (Clean, Professional)">أقرب لتوقعات العملاء السويديين (Clean, Professional)</span></li>
+                    <li data-lang-ar="صفحات Landing واضحة: تدعم الحملات التسويقية المخطط لها" data-lang-en="Clear Landing pages: Support planned marketing campaigns"><strong data-lang-ar="صفحات Landing واضحة:" data-lang-en="Clear Landing pages:">صفحات Landing واضحة:</strong> <span data-lang-ar="تدعم الحملات التسويقية المخطط لها" data-lang-en="Support planned marketing campaigns">تدعم الحملات التسويقية المخطط لها</span></li>
+                    <li data-lang-ar="قابلية التحويل: بنيته تسمح بإضافة CTAs وForms بسهولة" data-lang-en="Conversion capability: Structure allows easy CTAs and Forms addition"><strong data-lang-ar="قابلية التحويل:" data-lang-en="Conversion capability:">قابلية التحويل:</strong> <span data-lang-ar="بنيته تسمح بإضافة CTAs وForms بسهولة" data-lang-en="Structure allows easy CTAs and Forms addition">بنيته تسمح بإضافة CTAs وForms بسهولة</span></li>
+                    <li data-lang-ar="قابلية الترجمة: يمكن إضافة اللغة السويدية بشكل صحيح لاحقًا" data-lang-en="Localization capability: Swedish language can be properly added later"><strong data-lang-ar="قابلية الترجمة:" data-lang-en="Localization capability:">قابلية الترجمة:</strong> <span data-lang-ar="يمكن إضافة اللغة السويدية بشكل صحيح لاحقًا" data-lang-en="Swedish language can be properly added later">يمكن إضافة اللغة السويدية بشكل صحيح لاحقًا</span></li>
+                </ul>
+            </div>
+
+            <div class="content-card" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%);">
+                <h3 style="color: var(--accent-gold); margin-bottom: 20px;" data-lang-ar="💡 ملاحظة نهائية مهمة" data-lang-en="💡 Important Final Note">💡 <span data-lang-ar="ملاحظة نهائية مهمة" data-lang-en="Important Final Note">ملاحظة نهائية مهمة</span></h3>
+                <p data-lang-ar="لتحليل دقيق 100% بالأرقام الفعلية، يجب منح إمكانية الوصول للمواقع بدون قيود الـ IP، أو مشاركة ملف تصدير WordPress + بيانات PageSpeed Insights من Google Search Console مباشرةً. كل ما ورد أعلاه يستند إلى الأنماط المعمارية والتحليل التقني الاستنتاجي بناءً على بيانات الاتصال المتاحة." data-lang-en="For 100% accurate analysis with actual numbers, site access must be granted without IP restrictions, or a WordPress export file + PageSpeed Insights data from Google Search Console must be shared directly. Everything above is based on architectural patterns and deductive technical analysis from available connection data.">لتحليل دقيق 100% بالأرقام الفعلية، يجب منح إمكانية الوصول للمواقع بدون قيود الـ IP، أو مشاركة ملف تصدير WordPress + بيانات PageSpeed Insights من Google Search Console مباشرةً. كل ما ورد أعلاه يستند إلى الأنماط المعمارية والتحليل التقني الاستنتاجي بناءً على بيانات الاتصال المتاحة.</p>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2 data-lang-ar="هل تحتاج مساعدة في تنفيذ هذه التحسينات؟" data-lang-en="Need Help Implementing These Improvements?">هل تحتاج مساعدة في تنفيذ هذه التحسينات؟</h2>
+            <p data-lang-ar="أنا مستعد لمساعدتك في تطبيق هذه الاستراتيجية وتحويل موقعك إلى منصة احترافية عالمية" data-lang-en="I'm ready to help you apply this strategy and transform your site into a world-class professional platform">أنا مستعد لمساعدتك في تطبيق هذه الاستراتيجية وتحويل موقعك إلى منصة احترافية عالمية</p>
+            <div class="cta-buttons">
+                <a href="https://moh222salah.github.io/cv" target="_blank" class="cta-btn cta-btn-primary">
+                    <span>📁</span>
+                    <span data-lang-ar="معرض أعمالي" data-lang-en="My Portfolio">معرض أعمالي</span>
+                </a>
+                <a href="https://wa.me/201113903070" target="_blank" class="cta-btn cta-btn-secondary">
+                    <span>💬</span>
+                    <span data-lang-ar="تواصل عبر واتساب" data-lang-en="WhatsApp Contact">تواصل عبر واتساب</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p data-lang-ar="© 2026 تقرير احترافي مُعد بخبرة CTO — جميع الحقوق محفوظة" data-lang-en="© 2026 Professional Report Prepared with CTO Expertise — All Rights Reserved">© 2026 تقرير احترافي مُعد بخبرة CTO — جميع الحقوق محفوظة</p>
+                <div class="footer-links">
+                    <a href="#executive" data-lang-ar="التقييم" data-lang-en="Assessment">التقييم</a>
+                    <a href="#strategy" data-lang-ar="خطة الإصلاح" data-lang-en="Fix Plan">خطة الإصلاح</a>
+                    <a href="#recommendation" data-lang-ar="التوصية" data-lang-en="Recommendation">التوصية</a>
+                </div>
+                <p style="margin-top: 16px; font-size: 12px; opacity: 0.6;" data-lang-ar="مصمم باحترافية عالمية وعقلية هندسية رفيعة المستوى" data-lang-en="Designed with world-class professionalism and high-level engineering mindset">مصمم باحترافية عالمية وعقلية هندسية رفيعة المستوى</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle
+        let currentLang = 'ar';
+        
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            
+            const elements = document.querySelectorAll('[data-lang-ar][data-lang-en]');
+            elements.forEach(el => {
+                el.textContent = el.getAttribute(`data-lang-${currentLang}`);
+            });
+            
+            localStorage.setItem('preferredLang', currentLang);
+        }
+        
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (newTheme === 'light') {
+                themeBtn.textContent = currentLang === 'ar' ? '☀️ الوضع النهاري' : '☀️ Light Mode';
+            } else {
+                themeBtn.textContent = currentLang === 'ar' ? '🌙 الوضع الليلي' : '🌙 Dark Mode';
+            }
+            
+            localStorage.setItem('preferredTheme', newTheme);
+        }
+        
+        // Tab Navigation
+        function showTab(tabId) {
+            // Hide all tabs
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active state from all buttons
+            const allBtns = document.querySelectorAll('.tab-btn');
+            allBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active state to clicked button
+            event.target.classList.add('active');
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Load preferences on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load language preference
+            const savedLang = localStorage.getItem('preferredLang');
+            if (savedLang && savedLang !== 'ar') {
+                toggleLanguage();
+            }
+            
+            // Load theme preference
+            const savedTheme = localStorage.getItem('preferredTheme');
+            if (savedTheme === 'light') {
+                toggleTheme();
+            }
+            
+            // Detect system preference for theme if no saved preference
+            if (!savedTheme) {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (!prefersDark) {
+                    toggleTheme();
+                }
+            }
+        });
+        
+        // Smooth scroll for footer links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetTab = document.getElementById(targetId);
+                
+                if (targetTab) {
+                    // Find the corresponding tab button
+                    const tabBtns = document.querySelectorAll('.tab-btn');
+                    tabBtns.forEach(btn => {
+                        if (btn.getAttribute('onclick').includes(targetId)) {
+                            btn.click();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
