@@ -654,6 +654,188 @@
         </div>
     </header>
 
+<!-- Quick Links Section - Add this after </header> and before warning-banner -->
+<section class="quick-links-section">
+    <style>
+        /* Quick Links Section - Scoped Styles */
+        .quick-links-section {
+            padding: 24px 0;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .quick-link-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-gold) 0%, var(--accent-blue) 100%);
+ ة          transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s ease;
+        }
+
+        .quick-link-card:hover::before {
+            transform: scaleY(1);
+            transform-origin: top;
+        }
+
+        .quick-link-card:hover {
+            background: var(--bg-glass);
+            border-color: var(--accent-gold);
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        [dir="ltr"] .quick-link-card:hover {
+            transform: translateX(4px);
+        }
+
+        .quick-link-icon {
+            font-size: 32px;
+            line-height: 1;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.3));
+Work     }
+
+        .quick-link-content {
+            flex: 1;
+        }
+
+        .quick-link-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 4px 0;
+            transition: color 0.3s ease;
+        }
+
+        .quick-link-card:hover .quick-link-title {
+            color: var(--accent-gold);
+        }
+
+        .quick-link-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .quick-link-arrow {
+            font-size: 20px;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .quick-link-card:hover .quick-link-arrow {
+            color: var(--accent-gold);
+            transform: translateX(4px);
+        }
+
+        [dir="ltr"] .quick-link-card:hover .quick-link-arrow {
+            transform: translateX(-4px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quick-links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-link-card {
+                padding: 14px 16px;
+            }
+            
+            .quick-link-icon {
+                font-size: 28px;
+            }
+            
+            .quick-link-title {
+                font-size: 15px;
+            }
+            
+            .quick-link-subtitle {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quick-links-section {
+                padding: 16px 0;
+            }
+            
+            .quick-links-grid {
+                gap: 12px;
+            }
+        }
+    </style>
+
+    <div class="container">
+        <div class="quick-links-grid">
+            <a href="https://moh222salah.github.io/projects/tech-ask.html " target="_blank" class="quick-link-card">
+                <div class="quick-link-icon">📁</div>
+                <div class="quick-link-content">
+                    <h3 class="quick-link-title" data-lang-ar="اسئلة تقنية" data-lang-en="Tech Ask"> اسئلة تقنية</h3>
+                    <p class="quick-link-subtitle" data-lang-ar="اسئلة تقنية " data-lang-en=" Tech Ask"> اسئلة تقنية</p>
+                </div>
+                <div class="quick-link-arrow">→</div>
+            </a>
+            
+            <a href="https://wa.me/201113903070" target="_blank" class="quick-link-card">
+                <div class="quick-link-icon">💬</div>
+                <div class="quick-link-content">
+                    <h3 class="quick-link-title" data-lang-ar="واتساب" data-lang-en="WhatsApp">واتساب</h3>
+                    <p class="quick-link-subtitle" data-lang-ar="تواصل مباشر" data-lang-en="Direct Contact">تواصل مباشر</p>
+                </div>
+                <div class="quick-link-arrow">→</div>
+            </a>
+            
+            <a href="https://github.com/moh222salah" target="_blank" class="quick-link-card">
+                <div class="quick-link-icon">💻</div>
+                <div class="quick-link-content">
+                    <h3 class="quick-link-title" data-lang-ar="جيت هاب" data-lang-en="GitHub">جيت هاب</h3>
+                    <p class="quick-link-subtitle" data-lang-ar="مشاريع البرمجة" data-lang-en="Coding Projects">مشاريع البرمجة</p>
+                </div>
+                <div class="quick-link-arrow">→</div>
+            </a>
+            
+            <a href="mailto:moh222salah@example.com" class="quick-link-card">
+                <div class="quick-link-icon">📧</div>
+                <div class="quick-link-content">
+                    <h3 class="quick-link-title" data-lang-ar="البريد الإلكتروني" data-lang-en="Email">البريد الإلكتروني</h3>
+                    <p class="quick-link-subtitle" data-lang-ar="راسلني الآن" data-lang-en="Send Message">راسلني الآن</p>
+                </div>
+                <div class="quick-link-arrow">→</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+    
     <main class="container">
         <div class="warning-banner">
             <h3>⚠️ <span data-lang-ar="ملاحظة تقنية مهمة" data-lang-en="Critical Technical Note">ملاحظة تقنية مهمة</span></h3>
