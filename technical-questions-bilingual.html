@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أسئلة تقنية | Technical Questions</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #161b24;
+    --border: #1e2733;
+    --accent-ar: #f97316;
+    --accent-en: #38bdf8;
+    --text-primary: #f0f4f8;
+    --text-muted: #6b7a8d;
+    --red: #ef4444;
+    --green: #22c55e;
+    --glow-ar: rgba(249, 115, 22, 0.15);
+    --glow-en: rgba(56, 189, 248, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Cairo', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: relative;
+    text-align: center;
+    padding: 56px 24px 40px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #0d1117 0%, var(--bg) 100%);
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-ar), var(--accent-en), transparent);
+  }
+
+  .header-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+  }
+
+  h1 {
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--accent-ar) 0%, #fb923c 40%, var(--accent-en) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+    direction: ltr;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── MAIN GRID ─── */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* ─── COLUMN HEADERS ─── */
+  .col-headers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 24px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  .col-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-radius: 10px 10px 0 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .col-label.ar {
+    background: var(--glow-ar);
+    border: 1px solid rgba(249,115,22,0.3);
+    border-bottom: none;
+    color: var(--accent-ar);
+    direction: rtl;
+    justify-content: flex-end;
+  }
+
+  .col-label.en {
+    background: var(--glow-en);
+    border: 1px solid rgba(56,189,248,0.3);
+    border-bottom: none;
+    color: var(--accent-en);
+    direction: ltr;
+    justify-content: flex-start;
+  }
+
+  .col-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .col-label.ar .col-dot { background: var(--accent-ar); box-shadow: 0 0 8px var(--accent-ar); }
+  .col-label.en .col-dot { background: var(--accent-en); box-shadow: 0 0 8px var(--accent-en); }
+
+  /* ─── QUESTION CARDS ─── */
+  .questions-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .question-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .question-row:hover {
+    background: rgba(255,255,255,0.015);
+  }
+
+  /* Number indicator */
+  .question-row::before {
+    content: attr(data-num);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.03);
+    z-index: 0;
+    pointer-events: none;
+    letter-spacing: -2px;
+  }
+
+  .cell {
+    padding: 28px 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cell-ar {
+    border-right: none;
+    border-left: 1px solid var(--border);
+    direction: rtl;
+    text-align: right;
+    background: linear-gradient(90deg, transparent 0%, rgba(249,115,22,0.03) 100%);
+  }
+
+  .cell-en {
+    direction: ltr;
+    text-align: left;
+    background: linear-gradient(90deg, rgba(56,189,248,0.03) 0%, transparent 100%);
+  }
+
+  /* Issue badge */
+  .issue-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .issue-tag.ar {
+    background: rgba(239,68,68,0.12);
+    border: 1px solid rgba(239,68,68,0.25);
+    color: #f87171;
+    direction: rtl;
+  }
+
+  .issue-tag.en {
+    background: rgba(239,68,68,0.12);
+    border: 1px solid rgba(239,68,68,0.25);
+    color: #f87171;
+  }
+
+  .issue-tag .dot {
+    width: 6px; height: 6px;
+    background: #ef4444;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #ef4444;
+    flex-shrink: 0;
+  }
+
+  /* Issue title */
+  .issue-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .cell-ar .issue-title { color: #fed7aa; }
+  .cell-en .issue-title { color: #bae6fd; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* Question text */
+  .question-text {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #c8d4e0;
+    font-style: italic;
+    padding: 14px 16px;
+    border-radius: 8px;
+    border-right: 3px solid var(--accent-ar);
+    background: rgba(249,115,22,0.06);
+    position: relative;
+  }
+
+  .cell-en .question-text {
+    border-right: none;
+    border-left: 3px solid var(--accent-en);
+    background: rgba(56,189,248,0.06);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+  }
+
+  /* Bonus row */
+  .question-row.bonus .cell-ar {
+    background: linear-gradient(90deg, transparent, rgba(34,197,94,0.05));
+  }
+  .question-row.bonus .cell-en {
+    background: linear-gradient(90deg, rgba(34,197,94,0.05), transparent);
+  }
+  .question-row.bonus .issue-tag {
+    background: rgba(34,197,94,0.1);
+    border-color: rgba(34,197,94,0.25);
+    color: #86efac;
+  }
+  .question-row.bonus .issue-tag .dot { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+  .question-row.bonus .question-text { border-color: #22c55e; background: rgba(34,197,94,0.06); }
+
+  /* ─── DIVIDER STRIPE ─── */
+  .divider-stripe {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-ar), var(--accent-en), transparent);
+    margin: 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 32px 24px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+  }
+
+  footer span { color: var(--accent-ar); }
+
+  /* ─── ROW NUMBER BADGE ─── */
+  .row-num {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    z-index: 5;
+  }
+
+  /* ─── SCROLL ANIMATION ─── */
+  .question-row {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .question-row:nth-child(1)  { animation-delay: 0.05s; }
+  .question-row:nth-child(2)  { animation-delay: 0.10s; }
+  .question-row:nth-child(3)  { animation-delay: 0.15s; }
+  .question-row:nth-child(4)  { animation-delay: 0.20s; }
+  .question-row:nth-child(5)  { animation-delay: 0.25s; }
+  .question-row:nth-child(6)  { animation-delay: 0.30s; }
+  .question-row:nth-child(7)  { animation-delay: 0.35s; }
+  .question-row:nth-child(8)  { animation-delay: 0.40s; }
+  .question-row:nth-child(9)  { animation-delay: 0.45s; }
+  .question-row:nth-child(10) { animation-delay: 0.50s; }
+  .question-row:nth-child(11) { animation-delay: 0.55s; }
+  .question-row:nth-child(12) { animation-delay: 0.60s; }
+  .question-row:nth-child(13) { animation-delay: 0.65s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .col-headers { grid-template-columns: 1fr; gap: 4px; }
+    .question-row { grid-template-columns: 1fr; }
+    .col-label.ar, .col-label.en { border-radius: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .cell-ar { border-left: none; border-bottom: 1px solid var(--border); }
+    .row-num { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-badge">Technical Audit · NordicBizHub</div>
+  <h1>أسئلة المراجعة التقنية</h1>
+  <p class="header-sub">Developer Handover Intelligence Questions</p>
+</header>
+
+<div class="container">
+
+  <!-- COLUMN LABELS -->
+  <div class="col-headers">
+    <div class="col-label ar">
+      <span>عربي</span>
+      <div class="col-dot"></div>
+    </div>
+    <div class="col-label en">
+      <div class="col-dot"></div>
+      <span>English</span>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="questions-wrap">
+
+    <!-- Q1 -->
+    <div class="question-row" data-num="01">
+      <div class="row-num">01</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> مشكلة حرجة</div>
+        <div class="issue-title">المواقع التجريبية مكشوفة على Google</div>
+        <div class="question-text">
+          لاحظت إن test1 و test مش محمييين بـ noindex ولا بـ Basic Auth — يعني Google بيشوفهم وبيعتبرهم محتوى مكرر مع الموقع الأصلي... ده بيضر الـ SEO بشكل صامت. إيه اللي منعك إنك تعمل حماية لهم من الأول؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Critical Issue</div>
+        <div class="issue-title">Staging Sites Exposed to Google</div>
+        <div class="question-text">
+          I noticed that test1. and test. subdomains have no noindex meta tag and no HTTP Basic Authentication — meaning Google is actively crawling them as duplicate content. This silently tanks the SEO score. Was there a reason this wasn't addressed, or was it simply overlooked?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-row" data-num="02">
+      <div class="row-num">02</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> أداء ضعيف</div>
+        <div class="issue-title">الموقع بطيء بشكل واضح</div>
+        <div class="question-text">
+          لما بفتح الموقع بحس إنه بياخد 4-5 ثواني قبل ما أشوف أي حاجة — ده مش طبيعي خالص. هل اشتغلتِ على تحسين الـ Core Web Vitals في أي مرحلة؟ ولا الموضوع ما اتذكرش أصلاً؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Performance</div>
+        <div class="issue-title">Page Load Speed is Critically Slow</div>
+        <div class="question-text">
+          When I open the site, it takes 4 to 6 seconds before anything meaningful renders — well outside acceptable thresholds for a B2B business targeting European clients. Was any performance optimization done? Things like LCP improvement, TTI reduction, or TTFB tuning?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-row" data-num="03">
+      <div class="row-num">03</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> كود زيادة</div>
+        <div class="issue-title">CSS و JS زيادة عن اللزوم</div>
+        <div class="question-text">
+          لما بشوف الـ Network Tab، بلاقي CSS و JS بيتحملوا وفيهم 60-70% كود مش بيتستخدم في الصفحة خالص — ده علامة إن الـ Page Builder اتستخدم من غير تنظيف. هل اشتغلتِ على Unused CSS Removal ولا سبتيه زي ما هو؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Code Bloat</div>
+        <div class="issue-title">Massive Unused CSS & JavaScript</div>
+        <div class="question-text">
+          Looking at the Network tab in DevTools, roughly 60–70% of the CSS and JS loaded is completely unused on most pages. Classic symptom of an unoptimized Page Builder. Was any CSS pruning or tree-shaking done, or was that left as-is?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-row" data-num="04">
+      <div class="row-num">04</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> صور غير محسّنة</div>
+        <div class="issue-title">الصور مش متحسنة خالص</div>
+        <div class="question-text">
+          الصور على الموقع لسه بـ JPG أو PNG بأحجام كبيرة — مفيش تحويل لـ WebP ولا Lazy Loading واضح. ده لوحده بيأخر الموقع ثانية أو اتنين. اشتغلتِ على تحسين الصور ولا كانت أولوية تانية؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Images</div>
+        <div class="issue-title">Images Are Not Optimized</div>
+        <div class="question-text">
+          Images across the site are still served in JPG or PNG at large file sizes, with no WebP conversion and no consistent Lazy Loading. On its own, that adds 1–2 seconds to load time. Was image optimization part of the deliverables, or was it deprioritized?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-row" data-num="05">
+      <div class="row-num">05</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> أمان</div>
+        <div class="issue-title">Security Headers غايبة تماماً</div>
+        <div class="question-text">
+          لو فتحت الموقع على securityheaders.com هتلاقيه بياخد Grade F أو D — يعني X-Frame-Options و Content-Security-Policy وغيرهم مش موجودين. ده بيسيب الموقع مكشوف لـ Clickjacking. ده ماكانش ضمن المتطلبات ولا ما اتذكرش؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Security</div>
+        <div class="issue-title">Security Headers Are Missing</div>
+        <div class="question-text">
+          Running the site through securityheaders.com, it likely scores an F or D — headers like X-Frame-Options, Content-Security-Policy, and Referrer-Policy are absent or misconfigured. That leaves the site exposed to Clickjacking and XSS. Was security hardening scoped into the project?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-row" data-num="06">
+      <div class="row-num">06</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> Caching</div>
+        <div class="issue-title">مفيش Caching حقيقي</div>
+        <div class="question-text">
+          كل ما حد بيدخل الموقع، الـ Server بيولد الصفحة من أول وجديد من قاعدة البيانات — مفيش Full Page Cache شغال. ده معناه إن لو جه 100 زائر مع بعض، الموقع ممكن يبطأ أو يوقع. اشتغلتِ على Caching Strategy بأي شكل؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Caching</div>
+        <div class="issue-title">No Real Caching Strategy in Place</div>
+        <div class="question-text">
+          There's no Full-Page Caching layer active — every request hits PHP and regenerates from the database on the fly. Under any meaningful traffic spike, that's a recipe for slowdowns or a full crash. Was WP Rocket, LiteSpeed Cache, or Redis ever implemented or discussed?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-row" data-num="07">
+      <div class="row-num">07</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> Plugins</div>
+        <div class="issue-title">Plugins متراكمة ومتعارضة</div>
+        <div class="question-text">
+          في علامات إن في Plugins كتير شغالة مع بعض وبعضها ممكن بيتعارض — ده بيزود الـ Load Time وبيفتح ثغرات أمنية. كام Plugin كانوا شغالين؟ وهل كانوا كلهم ضروريين فعلاً؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Plugins</div>
+        <div class="issue-title">Plugin Bloat & Potential Conflicts</div>
+        <div class="question-text">
+          There are signs of significant plugin accumulation — causing both performance degradation and security exposure, especially if some haven't been updated. How many active plugins were running? And were they all genuinely necessary, or did some just accumulate over time?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-row" data-num="08">
+      <div class="row-num">08</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> SEO تقني</div>
+        <div class="issue-title">Schema Markup غايب خالص</div>
+        <div class="question-text">
+          الموقع مفيهوش Structured Data — يعني Google مش عارف يعمل Rich Snippets للشركة في نتائج البحث. لشركة B2B بتستهدف السوق الأوروبي ده خسارة كبيرة في الظهور. ده كان ضمن المتطلبات الأصلية ولا ما طلبوهوش؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Technical SEO</div>
+        <div class="issue-title">Zero Structured Data / Schema Markup</div>
+        <div class="question-text">
+          There's no Structured Data anywhere — no Organization schema, no LocalBusiness, no Service markup. For a company targeting the European B2B market, that means zero chance of Rich Snippets in Google, a direct hit to organic visibility. Was Schema Markup ever in scope?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-row" data-num="09">
+      <div class="row-num">09</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> Crawling</div>
+        <div class="issue-title">robots.txt و Sitemap ناقصين</div>
+        <div class="question-text">
+          ملف الـ robots.txt مش بيمنع Google من أنه يزحف على الصفحات اللي المفروض تكون خاصة — والـ Sitemap.xml مش محدَّث بانتظام. ده بيخلي الـ Crawl Budget يتبدد على صفحات مش مهمة. اشتغلتِ على الـ Technical SEO Foundation ولا ما دخلتش في الـ scope؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Crawling</div>
+        <div class="issue-title">robots.txt and Sitemap.xml Are Weak</div>
+        <div class="question-text">
+          The robots.txt isn't blocking Google from crawling pages that should be private — and the sitemap.xml doesn't appear dynamically generated or regularly updated. That means crawl budget is being wasted on low-value pages. Was Technical SEO Foundation work included in scope?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-row" data-num="10">
+      <div class="row-num">10</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> Backup</div>
+        <div class="issue-title">مفيش Backup Strategy واضحة</div>
+        <div class="question-text">
+          لو الموقع اتهاجم أو انهار دلوقتي — في backup جاهز ومتعمل بانتظام؟ ولا الموضوع كان متعمل manually من وقت للتاني؟ لأن من غير Automated Backup الموقع ممكن يضيع من غير رجعة.
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Backup</div>
+        <div class="issue-title">No Automated Backup System</div>
+        <div class="question-text">
+          If the site went down or got compromised right now — is there a recent automated backup ready to restore from? Or were backups being handled manually on an ad-hoc basis? Without a scheduled off-server backup system, a single incident could mean total data loss.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="question-row" data-num="11">
+      <div class="row-num">11</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> Version Control</div>
+        <div class="issue-title">مفيش Git ولا Version Control</div>
+        <div class="question-text">
+          هل كان في Git Repository شغال طول المشروع — بـ branching صح وcommit history واضح؟ ولا التعديلات كانت بتتعمل مباشرة على الـ Production من غير أي version control؟ ده مهم جداً لأي developer هياخد الموقع بعد كده.
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Version Control</div>
+        <div class="issue-title">No Git Workflow or Version Control</div>
+        <div class="question-text">
+          Was there a Git repository maintained throughout the project — with proper branching, commit history, and documented changes? Or were edits being pushed directly to production without version control? This is critical for handover quality and for any future developer taking over the codebase.
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="question-row" data-num="12">
+      <div class="row-num">12</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar"><div class="dot"></div> Core Web Vitals</div>
+        <div class="issue-title">الـ Core Web Vitals كلها Failing</div>
+        <div class="question-text">
+          لما بشغّل الموقع على Google PageSpeed Insights، الـ LCP فوق 4 ثواني، الـ CLS فوق 0.15، والـ INP برا الـ threshold — وده معناه إن Google بيعاقب الموقع في الترتيب بشكل مباشر. هل الـ Core Web Vitals اتقيسوا أو اتشتغل عليهم في أي مرحلة؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en"><div class="dot"></div> Core Web Vitals</div>
+        <div class="issue-title">All Three Core Web Vitals Are Failing</div>
+        <div class="question-text">
+          Running the site through Google PageSpeed Insights, all three Core Web Vitals appear in the red — LCP above 4 seconds, CLS above 0.15, and INP outside the acceptable range. Since Google uses these as direct ranking signals, this is actively suppressing search visibility. Was CWV ever benchmarked or targeted?
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13 BONUS -->
+    <div class="question-row bonus" data-num="★">
+      <div class="row-num" style="color: #22c55e; border-color: rgba(34,197,94,0.3);">★</div>
+      <div class="cell cell-ar">
+        <div class="issue-tag ar" style="background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.25); color:#86efac;">
+          <div class="dot" style="background:#22c55e; box-shadow: 0 0 6px #22c55e;"></div>
+          سؤال التسليم
+        </div>
+        <div class="issue-title">التسليم التقني الكامل</div>
+        <div class="question-text" style="border-color:#22c55e; background:rgba(34,197,94,0.06);">
+          للتسليم الصح — في documentation موجودة؟ يعني: قايمة بكل الـ Plugins ووظيفة كل واحدة، أي كود custom اتكتب، بيانات الاستضافة والـ DNS، والـ bugs المعروفة أو الـ features اللي ما اكتملتش؟
+        </div>
+      </div>
+      <div class="cell cell-en">
+        <div class="issue-tag en" style="background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.25); color:#86efac;">
+          <div class="dot" style="background:#22c55e; box-shadow: 0 0 6px #22c55e;"></div>
+          Handover
+        </div>
+        <div class="issue-title">The Full Technical Handover Question</div>
+        <div class="question-text" style="border-color:#22c55e; background:rgba(34,197,94,0.06);">
+          For a clean technical handover — is there documentation available? Things like: a list of all plugins and their purpose, any custom code written, hosting credentials, DNS records, and any known bugs or unfinished features that were left open?
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end questions-wrap -->
+
+  <div class="divider-stripe" style="margin-top:0;"></div>
+
+</div><!-- end container -->
+
+<footer>
+  <span>NordicBizHub</span> · Technical Audit Report · Developer Intelligence Questions
+</footer>
+
+</body>
+</html>
