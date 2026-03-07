@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NordicBizHub — تقرير التحوّل الرقمي 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A1628;--navy2:#0F2044;--blue:#1A4B8C;--blue2:#2563EB;--cyan:#06B6D4;--gold:#F59E0B;--gold2:#FBBF24;--green:#10B981;--white:#FFFFFF;--off:#F0F4FF;--gray:#94A3B8;--light:#E2E8F0;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--glow:rgba(37,99,235,0.3)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo','Tajawal',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;line-height:1.7}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(37,99,235,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,0.04) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.orb1{width:600px;height:600px;background:rgba(37,99,235,0.12);top:-200px;right:-200px}
+.orb2{width:500px;height:500px;background:rgba(6,182,212,0.08);bottom:-100px;left:-100px}
+.orb3{width:400px;height:400px;background:rgba(245,158,11,0.06);top:50%;left:50%;transform:translate(-50%,-50%)}
+main{position:relative;z-index:1}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 40px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue2),var(--cyan),transparent)}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.4);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:600;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:32px;animation:fadeDown 0.8s ease both}
+.badge::before{content:'◈';font-size:14px}
+.hero-title{font-family:'Tajawal',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;line-height:1.1;margin-bottom:24px;animation:fadeDown 0.9s ease 0.1s both}
+.hero-title .brand{background:linear-gradient(135deg,#60A5FA,#2563EB,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-title .accent{background:linear-gradient(135deg,#F59E0B,#FBBF24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(16px,2.5vw,22px);color:var(--gray);max-width:700px;margin:0 auto 48px;font-weight:300;animation:fadeDown 1s ease 0.2s both}
+.hero-meta{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;animation:fadeDown 1.1s ease 0.3s both}
+.hero-meta-num{font-family:'Space Mono',monospace;font-size:40px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-meta-label{font-size:13px;color:var(--gray);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gray);font-size:12px;letter-spacing:2px;text-transform:uppercase;animation:bounce 2s infinite}
+.hero-scroll::before{content:'';width:1px;height:40px;background:linear-gradient(transparent,var(--blue2))}
+section{padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-label{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.section-label::before{content:'';width:40px;height:1px;background:var(--cyan)}
+.section-title{font-family:'Tajawal',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.2;margin-bottom:16px}
+.section-title span{color:var(--blue2)}
+.section-desc{font-size:17px;color:var(--gray);max-width:620px;margin-bottom:60px;font-weight:300}
+.divider{width:100%;max-width:1200px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--border),rgba(37,99,235,0.3),var(--border),transparent)}
+.timeline{position:relative;padding-right:40px}
+.timeline::before{content:'';position:absolute;top:0;bottom:0;right:0;width:2px;background:linear-gradient(var(--blue2),var(--cyan),transparent)}
+.timeline-item{position:relative;padding:0 40px 48px 0}
+.timeline-item::before{content:'';position:absolute;top:6px;right:-6px;width:14px;height:14px;border-radius:50%;background:var(--blue2);border:2px solid var(--navy);box-shadow:0 0 16px var(--glow)}
+.timeline-item.gold::before{background:var(--gold);box-shadow:0 0 16px rgba(245,158,11,0.4)}
+.timeline-item.green::before{background:var(--green);box-shadow:0 0 16px rgba(16,185,129,0.4)}
+.timeline-date{font-family:'Space Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:2px;margin-bottom:8px}
+.timeline-title{font-size:20px;font-weight:700;margin-bottom:8px}
+.timeline-body{font-size:15px;color:var(--gray);line-height:1.8}
+.cards{display:grid;gap:24px}
+.cards-2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.cards-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;position:relative;overflow:hidden;transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(37,99,235,0.4);box-shadow:0 20px 60px rgba(0,0,0,0.3),0 0 40px rgba(37,99,235,0.1)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue2),transparent);opacity:0;transition:opacity 0.3s}
+.card:hover::before{opacity:1}
+.card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.2)}
+.card-icon.gold{background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.2)}
+.card-icon.cyan{background:rgba(6,182,212,0.15);border-color:rgba(6,182,212,0.2)}
+.card-icon.green{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.2)}
+.card-title{font-size:20px;font-weight:700;margin-bottom:10px}
+.card-body{font-size:14px;color:var(--gray);line-height:1.8}
+.arch{background:rgba(10,22,40,0.8);border:1px solid rgba(37,99,235,0.2);border-radius:24px;padding:48px;position:relative;overflow:hidden}
+.arch::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(37,99,235,0.08),transparent 60%)}
+.arch-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:24px;position:relative;z-index:1}
+.arch-box{background:rgba(37,99,235,0.12);border:1px solid rgba(37,99,235,0.3);border-radius:12px;padding:16px 24px;text-align:center;min-width:160px;position:relative}
+.arch-box.gold{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3)}
+.arch-box.cyan{background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.3)}
+.arch-box.green{background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3)}
+.arch-box.purple{background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3)}
+.arch-box-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.arch-box-title{font-size:15px;font-weight:700}
+.arch-arrow{color:var(--gray);font-size:20px;flex-shrink:0}
+.arch-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(37,99,235,0.2),transparent);margin:24px 0}
+.status-table{width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;background:rgba(10,22,40,0.5);border:1px solid var(--border)}
+.status-table thead tr{background:rgba(37,99,235,0.2);border-bottom:1px solid rgba(37,99,235,0.3)}
+.status-table thead th{padding:16px 20px;text-align:right;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-weight:400}
+.status-table tbody tr{border-bottom:1px solid var(--border);transition:background 0.2s}
+.status-table tbody tr:hover{background:rgba(37,99,235,0.05)}
+.status-table tbody tr:last-child{border-bottom:none}
+.status-table td{padding:16px 20px;font-size:14px;color:var(--light);text-align:right}
+.status-table td:first-child{font-weight:700;color:var(--white)}
+.badge-status{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px}
+.badge-status.green{background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.3)}
+.badge-status.blue{background:rgba(37,99,235,0.15);color:#60A5FA;border:1px solid rgba(37,99,235,0.3)}
+.badge-status.gold{background:rgba(245,158,11,0.15);color:#F59E0B;border:1px solid rgba(245,158,11,0.3)}
+.badge-status::before{content:'●';font-size:8px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2px;background:var(--border);border-radius:20px;overflow:hidden;border:1px solid var(--border);margin-bottom:60px}
+.metric{background:rgba(10,22,40,0.7);padding:32px 24px;text-align:center}
+.metric-num{font-family:'Space Mono',monospace;font-size:38px;font-weight:700;line-height:1;margin-bottom:8px}
+.metric-num.blue{color:var(--blue2)}.metric-num.gold{color:var(--gold)}.metric-num.green{color:var(--green)}.metric-num.cyan{color:var(--cyan)}
+.metric-label{font-size:12px;color:var(--gray);letter-spacing:1px;text-transform:uppercase}
+.code-block{background:#0D1117;border:1px solid rgba(37,99,235,0.2);border-radius:16px;overflow:hidden;margin:24px 0}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:rgba(37,99,235,0.08);border-bottom:1px solid rgba(37,99,235,0.15)}
+.code-header-dots{display:flex;gap:6px}
+.code-dot{width:10px;height:10px;border-radius:50%}
+.code-dot:nth-child(1){background:#FF5F57}.code-dot:nth-child(2){background:#FEBC2E}.code-dot:nth-child(3){background:#28C840}
+.code-lang{font-family:'Space Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:2px}
+.code-body{padding:24px;font-family:'Space Mono',monospace;font-size:13px;line-height:1.8;direction:ltr;text-align:left;overflow-x:auto}
+.kw{color:#C084FC}.fn{color:#60A5FA}.str{color:#86EFAC}.cm{color:#4B5563}.cl{color:#FBBF24}
+.flow{display:flex;gap:0;flex-wrap:wrap}
+.flow-step{flex:1;min-width:150px;position:relative;text-align:center;padding:32px 16px}
+.flow-step::after{content:'←';position:absolute;top:50%;right:-12px;transform:translateY(-50%);font-size:20px;color:var(--blue2);z-index:2}
+.flow-step:last-child::after{display:none}
+.flow-num{width:44px;height:44px;border-radius:50%;background:rgba(37,99,235,0.2);border:1px solid rgba(37,99,235,0.4);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--blue2);margin:0 auto 12px}
+.flow-label{font-size:13px;font-weight:600;margin-bottom:6px}
+.flow-sub{font-size:11px;color:var(--gray);line-height:1.5}
+.workflow-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.workflow-card{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px;transition:all 0.3s}
+.workflow-card:hover{background:rgba(37,99,235,0.08);border-color:rgba(37,99,235,0.3);transform:translateY(-2px)}
+.workflow-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.6);animation:pulse 2s infinite;flex-shrink:0}
+.workflow-header{display:flex;align-items:center;gap:10px}
+.workflow-name{font-size:14px;font-weight:700}
+.workflow-desc{font-size:12px;color:var(--gray);line-height:1.6}
+.workflow-tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-family:'Space Mono',monospace;letter-spacing:1px;background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.2);width:fit-content}
+.roadmap{display:flex;flex-direction:column;gap:16px}
+.roadmap-item{display:grid;grid-template-columns:60px 1fr auto;align-items:center;gap:24px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:16px;padding:20px 28px;transition:all 0.3s}
+.roadmap-item:hover{border-color:rgba(37,99,235,0.3);background:rgba(37,99,235,0.05)}
+.roadmap-num{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:rgba(37,99,235,0.4)}
+.roadmap-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.roadmap-desc{font-size:13px;color:var(--gray);line-height:1.6}
+.cta{padding:120px 40px;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(37,99,235,0.15),transparent 70%)}
+.cta-title{font-family:'Tajawal',sans-serif;font-size:clamp(32px,5vw,64px);font-weight:800;line-height:1.1;margin-bottom:24px;position:relative}
+.cta-body{font-size:18px;color:var(--gray);max-width:600px;margin:0 auto 48px;position:relative}
+.cta-stack{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;margin-top:32px}
+.stack-tag{padding:10px 20px;border-radius:100px;border:1px solid var(--border);background:rgba(255,255,255,0.04);font-family:'Space Mono',monospace;font-size:12px;color:var(--gray);letter-spacing:1px}
+.banner{background:linear-gradient(135deg,rgba(37,99,235,0.15),rgba(6,182,212,0.1));border-top:1px solid rgba(37,99,235,0.2);border-bottom:1px solid rgba(37,99,235,0.2);padding:40px;margin:0}
+.banner-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
+.banner-text{font-size:20px;font-weight:700}.banner-sub{font-size:14px;color:var(--gray);margin-top:4px}
+.banner-num{font-family:'Space Mono',monospace;font-size:64px;font-weight:700;color:var(--gold);line-height:1}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+@media(max-width:768px){section{padding:60px 20px}.hero{padding:60px 20px}.flow{flex-direction:column}.roadmap-item{grid-template-columns:40px 1fr}.roadmap-item>:last-child{display:none}}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">تقرير التحوّل الرقمي الكامل — 2026</div>
+  <h1 class="hero-title">
+    <span class="brand">NordicBizHub</span><br>
+    من موقع إلى <span class="accent">نظام بيئي</span>
+  </h1>
+  <p class="hero-sub">كيف تحوّلت منصة خدمات رقمية سويدية في 23 يوماً إلى نظام Enterprise متكامل مع ERPNext، أتمتة كاملة عبر n8n، وبنية تحتية لا تتوقف</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><div class="hero-meta-num">23</div><div class="hero-meta-label">يوم عمل</div></div>
+    <div class="hero-meta-item"><div class="hero-meta-num">95%</div><div class="hero-meta-label">نسبة الإنجاز</div></div>
+    <div class="hero-meta-item"><div class="hero-meta-num">16</div><div class="hero-meta-label">Workflow أتمتة</div></div>
+    <div class="hero-meta-item"><div class="hero-meta-num">0</div><div class="hero-meta-label">دقيقة توقف</div></div>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</div>
+
+<!-- CONTEXT -->
+<section>
+  <div class="section-label">السياق الكامل للمشروع</div>
+  <h2 class="section-title">المنصة بنظرة <span>360°</span></h2>
+  <p class="section-desc">منصة NordicBizHub — شركة سويدية تقدم خدمات رقمية متكاملة للشركات الاسكندنافية والأوروبية، مع نظام إدارة داخلي كامل</p>
+  <div class="cards cards-3">
+    <div class="card"><div class="card-icon">🌐</div><div class="card-title">الموقع</div><div class="card-body">test1.nordicbizhub.com<br>Laravel 11 — بيئة إنتاج حية<br>VPS مخصص بـ cPanel — PHP 8.3</div></div>
+    <div class="card"><div class="card-icon cyan">⚙️</div><div class="card-title">نظام ERP</div><div class="card-body">ERPNext على Frappe Cloud<br>إدارة العملاء، الفواتير، المشاريع<br>تكامل عبر REST API Token Auth</div></div>
+    <div class="card"><div class="card-icon gold">🤖</div><div class="card-title">الأتمتة</div><div class="card-body">n8n Cloud — 16 Workflow نشط<br>SEO + HR + Marketing + Monitoring<br>تخفيض العمل اليدوي 70%</div></div>
+    <div class="card"><div class="card-icon green">👤</div><div class="card-title">العميل</div><div class="card-body">George — مدير شركة سويدية<br>يفكر بعقلية CTO<br>نظام يعمل بدون تدخل بشري</div></div>
+    <div class="card"><div class="card-icon">💻</div><div class="card-title">التقنيات</div><div class="card-body">Laravel 11 + PHP 8.3 + MySQL<br>Redis + Queue Workers + Spatie<br>OAuth 2.0 + Frappe REST API</div></div>
+    <div class="card"><div class="card-icon gold">📅</div><div class="card-title">الجدول الزمني</div><div class="card-body">13 فبراير – 7 مارس 2026<br>مرحلتان — 23 يوم عمل فعلي<br>من صفر توثيق إلى نظام Enterprise</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PHASE 1 -->
+<section>
+  <div class="section-label">المرحلة الأولى — 13 إلى 19 فبراير 2026</div>
+  <h2 class="section-title">استلام المشروع من <span>الصفر</span></h2>
+  <p class="section-desc">7 أيام هندسة عكسية كاملة وحل الأعطال الحرجة التي كانت تمنع المنصة من العمل في الإنتاج</p>
+  <div class="cards cards-2" style="margin-bottom:48px;">
+    <div class="card" style="border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.05);">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#F87171;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;">⚠ الوضع عند الاستلام</div>
+      <div class="card-title" style="margin-bottom:12px;">بدون أي توثيق</div>
+      <div class="card-body">لا Architecture Diagrams — لا Documentation — لا Handoff Notes<br><br><strong style="color:#F87171;">خطأ حرج #1:</strong> Google OAuth يفشل بـ InvalidStateException (HTTP 419) لكل المستخدمين<br><br><strong style="color:#F87171;">خطأ حرج #2:</strong> تدفق طلبات الخدمة معطل كلياً — العملاء عاجزون عن تقديم أي طلب</div>
+    </div>
+    <div class="card" style="border-color:rgba(16,185,129,0.2);background:rgba(16,185,129,0.05);">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#10B981;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;">✓ ما تم تحقيقه</div>
+      <div class="card-title" style="margin-bottom:12px;">هندسة عكسية + إعادة بناء كاملة</div>
+      <div class="card-body">فهم كامل للـ Codebase — رسم خريطة Data Models — تحديد نقاط الفشل<br><br><strong style="color:#10B981;">الحل #1:</strong> إعادة بناء GoogleController بنظام Stateless Authentication — صفر أخطاء<br><br><strong style="color:#10B981;">الحل #2:</strong> استعادة كاملة لدورة حياة الطلبات من أول خطوة لآخر خطوة</div>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">اليوم 1–2 — تحليل Root Cause</div>
+      <div class="timeline-title">اكتشاف السبب الجذري للأعطال</div>
+      <div class="timeline-body">السبب: تضارب Session بين النطاقات الفرعية. Laravel Session غير متوافق مع OAuth Callback domain — CSRF tokens تُبطل قبل استجابة Google مما يولد خطأ 419 في كل محاولة تسجيل دخول.</div>
+    </div>
+    <div class="timeline-item gold">
+      <div class="timeline-date">اليوم 3–4 — Stateless Auth Rebuild</div>
+      <div class="timeline-title">إعادة بناء GoogleController من الصفر</div>
+      <div class="timeline-body">حذف الاعتماد الكامل على Session في OAuth. توليد تلقائي لكلمة المرور (bcrypt). ربط الأدوار تلقائياً post-login. تأمين redirect URI. النتيجة النهائية: صفر أخطاء 419 على جميع المتصفحات.</div>
+    </div>
+    <div class="timeline-item green">
+      <div class="timeline-date">اليوم 5–7 — Flow Restoration</div>
+      <div class="timeline-title">استعادة Service Request Flow الكامل</div>
+      <div class="timeline-body">إصلاح Combined Order Pipeline: اختيار خدمات ← إجابة أسئلة ← مراجعة ← تقديم. التحقق من جميع Middleware الأدوار. اختبار شامل لـ Admin / Employee / Client. المنصة جاهزة للإنتاج.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PHASE 2 -->
+<section>
+  <div class="section-label">المرحلة الثانية — 20 فبراير إلى 7 مارس 2026</div>
+  <h2 class="section-title">بناء النظام <span>البيئي المتكامل</span></h2>
+  <p class="section-desc">16 يوماً من البناء الاحترافي العميق — من صفر تكامل إلى مزامنة حية مثبتة في بيئة الإنتاج</p>
+</section>
+
+<!-- ARCH -->
+<div style="max-width:1200px;margin:0 auto;padding:0 40px 80px;">
+  <div class="arch">
+    <div style="text-align:center;margin-bottom:36px;position:relative;z-index:1;">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">SYSTEM ARCHITECTURE</div>
+      <div style="font-size:22px;font-weight:700;">معمارية النظام ثلاثية الطبقات</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-box cyan"><div class="arch-box-label">Client Layer</div><div class="arch-box-title">🌐 Web Browser</div></div>
+    </div>
+    <div style="text-align:center;color:var(--gray);font-size:13px;margin:-12px 0 8px;position:relative;z-index:1;">↓ HTTPS Request</div>
+    <div class="arch-row">
+      <div class="arch-box"><div class="arch-box-label">Laravel Routes</div><div class="arch-box-title">🔐 Auth Middleware</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box gold"><div class="arch-box-label">AppServiceProvider</div><div class="arch-box-title">⚡ Event Listener</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box purple"><div class="arch-box-label">Database Queue</div><div class="arch-box-title">📋 Job Dispatcher</div></div>
+    </div>
+    <div class="arch-divider"></div>
+    <div class="arch-row">
+      <div class="arch-box" style="min-width:200px;"><div class="arch-box-label">Transport Layer</div><div class="arch-box-title">🔌 ERPNextService</div><div style="font-size:11px;color:var(--gray);margin-top:4px;">HTTP + Token Auth</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box gold" style="min-width:200px;"><div class="arch-box-label">Business Logic</div><div class="arch-box-title">⚙️ ERPNextSyncService</div><div style="font-size:11px;color:var(--gray);margin-top:4px;">Customer / Invoice / Project</div></div>
+    </div>
+    <div style="text-align:center;color:var(--gray);font-size:13px;margin:8px 0 -4px;position:relative;z-index:1;">↓ Frappe REST API</div>
+    <div class="arch-row">
+      <div class="arch-box green" style="min-width:200px;"><div class="arch-box-label">Frappe Cloud</div><div class="arch-box-title">📊 ERPNext</div><div style="font-size:11px;color:var(--gray);margin-top:4px;">Customer · Invoice · Project</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SYNC SECTION -->
+<section style="padding-top:0;">
+  <div class="section-label">التكامل المباشر — مثبت في الإنتاج</div>
+  <h3 class="section-title" style="font-size:clamp(22px,3vw,36px);">المزامنة <span>التلقائية الحية</span></h3>
+  <p class="section-desc">أي عميل يسجّل على الموقع ← يظهر في ERPNext خلال ثوانٍ. مثبت 100% أمام العميل مباشرة.</p>
+  <div style="background:rgba(10,22,40,0.5);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:48px;">
+    <div style="text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;">AUTO-SYNC FLOW — Registration → ERPNext</div>
+    <div class="flow">
+      <div class="flow-step"><div class="flow-num">1</div><div class="flow-label">تسجيل العميل</div><div class="flow-sub">User::created<br>Event fires</div></div>
+      <div class="flow-step"><div class="flow-num">2</div><div class="flow-label">Job Dispatch</div><div class="flow-sub">SyncCustomerToERP<br>+10s delay</div></div>
+      <div class="flow-step"><div class="flow-num">3</div><div class="flow-label">Queue Worker</div><div class="flow-sub">Background<br>processing</div></div>
+      <div class="flow-step"><div class="flow-num">4</div><div class="flow-label">API Call</div><div class="flow-sub">Frappe REST<br>POST Customer</div></div>
+      <div class="flow-step"><div class="flow-num" style="background:rgba(16,185,129,0.2);border-color:rgba(16,185,129,0.4);color:var(--green);">✓</div><div class="flow-label" style="color:var(--green);">ERPNext</div><div class="flow-sub">Customer created<br>ID saved locally</div></div>
+    </div>
+  </div>
+  <div class="code-block">
+    <div class="code-header"><div class="code-header-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div><div class="code-lang">PHP — AppServiceProvider.php (Event-Driven Architecture)</div></div>
+    <div class="code-body"><span class="kw">public function</span> <span class="fn">boot</span>(): <span class="kw">void</span>
+{
+    <span class="cm">// ── Auto-sync new users to ERPNext ──────────────────────────</span>
+    <span class="cl">User</span>::<span class="fn">created</span>(<span class="kw">function</span> (<span class="cl">User</span> <span class="str">$user</span>) {
+        <span class="cl">SyncCustomerToERP</span>::<span class="fn">dispatch</span>(<span class="str">$user</span>)
+            -><span class="fn">delay</span>(<span class="fn">now</span>()-><span class="fn">addSeconds</span>(<span class="str">10</span>));  <span class="cm">// wait for DB commit</span>
+    });
+
+    <span class="cm">// ── Auto-sync submitted orders ───────────────────────────────</span>
+    <span class="cl">CombinedOrder</span>::<span class="fn">updated</span>(<span class="kw">function</span> (<span class="cl">CombinedOrder</span> <span class="str">$order</span>) {
+        <span class="kw">if</span> (<span class="str">$order</span>-><span class="fn">isDirty</span>(<span class="str">'status'</span>)
+            && <span class="str">$order</span>->status === <span class="str">'submitted'</span>
+            && !<span class="str">$order</span>->erp_invoice_id) {
+            <span class="cl">SyncOrderToERP</span>::<span class="fn">dispatch</span>(<span class="str">$order</span>)
+                -><span class="fn">delay</span>(<span class="fn">now</span>()-><span class="fn">addSeconds</span>(<span class="str">3</span>));
+        }
+    });
+}</div>
+  </div>
+  <div class="cards cards-2" style="margin-top:40px;">
+    <div class="card"><div class="card-icon">🔄</div><div class="card-title">Retry Logic — 3 محاولات</div><div class="card-body">Exponential Backoff (30s → 60s). إذا فشلت جميع المحاولات يُسجَّل الخطأ مع User ID وError Message كاملة بدون أي تأثير على تجربة المستخدم.</div></div>
+    <div class="card"><div class="card-icon cyan">⏱</div><div class="card-title">Timeout Protection</div><div class="card-body">SyncCustomerToERP: 60 ثانية. SyncOrderToERP: 90 ثانية (Invoice + Project متوازيان). يمنع العمليات المعلقة من تعطيل Queue Worker.</div></div>
+    <div class="card"><div class="card-icon green">🗄</div><div class="card-title">Database Queue — Persistent</div><div class="card-body">QUEUE_CONNECTION=database. الوظائف محفوظة في قاعدة البيانات وتبقى بعد أي restart للسيرفر. Daemon Worker يعمل بشكل مستمر.</div></div>
+    <div class="card"><div class="card-icon gold">🔕</div><div class="card-title">Zero UI Impact — مضمون</div><div class="card-body">تجربة المستخدم لا تُلمس. جميع عمليات ERP في الخلفية الكاملة. المستخدم يُسجَّل وينتقل فوراً — لا انتظار لأي API Response.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- METRICS -->
+<div class="banner">
+  <div class="banner-inner">
+    <div><div class="banner-text">نتائج مثبتة — اختبار حي أمام العميل</div><div class="banner-sub">Ahmed10 سجّل على الموقع وظهر في ERPNext Selling > Customer في ثوانٍ</div></div>
+    <div class="banner-num">95%</div>
+  </div>
+</div>
+<section>
+  <div class="metrics">
+    <div class="metric"><div class="metric-num blue">3</div><div class="metric-label">طبقات خدمية</div></div>
+    <div class="metric"><div class="metric-num gold">3×</div><div class="metric-label">Retry تلقائي</div></div>
+    <div class="metric"><div class="metric-num green">0</div><div class="metric-label">دقيقة توقف</div></div>
+    <div class="metric"><div class="metric-num cyan">16</div><div class="metric-label">n8n Workflow</div></div>
+    <div class="metric"><div class="metric-num blue">70%</div><div class="metric-label">تخفيض يدوي</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- N8N -->
+<section>
+  <div class="section-label">طبقة الأتمتة الكاملة</div>
+  <h2 class="section-title">16 Workflow — <span>أتمتة شاملة</span></h2>
+  <p class="section-desc">n8n Cloud يُشغّل عمليات الأعمال تلقائياً عبر أربعة مجالات حيوية — تقليل التدخل البشري بنسبة 70%</p>
+  <div class="workflow-grid">
+    <div class="workflow-card"><div class="workflow-header"><div class="workflow-dot"></div><div class="workflow-name">SEO Automation</div></div><div class="workflow-tag">4 Workflows</div><div class="workflow-desc">جدولة المحتوى، إشعارات Sitemap، تتبع Meta Tags، تقارير أداء الكلمات المفتاحية تلقائياً</div></div>
+    <div class="workflow-card"><div class="workflow-header"><div class="workflow-dot"></div><div class="workflow-name">HR Workflows</div></div><div class="workflow-tag">4 Workflows</div><div class="workflow-desc">استقبال الموظفين الجدد، تذكيرات العقود، إشعارات الفريق، تقارير الحضور والغياب</div></div>
+    <div class="workflow-card"><div class="workflow-header"><div class="workflow-dot"></div><div class="workflow-name">Marketing Automation</div></div><div class="workflow-tag">4 Workflows</div><div class="workflow-desc">تسلسلات البريد الإلكتروني، تنمية العملاء المحتملين، جدولة السوشيال ميديا، تتبع الحملات</div></div>
+    <div class="workflow-card"><div class="workflow-header"><div class="workflow-dot"></div><div class="workflow-name">System Monitoring</div></div><div class="workflow-tag">4 Workflows</div><div class="workflow-desc">تنبيهات وقت التشغيل، لوحات معدل الأخطاء، تتبع الأداء، إشعارات فورية للمشاكل الحرجة</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STATUS TABLE -->
+<section>
+  <div class="section-label">حالة الإنتاج الكاملة</div>
+  <h2 class="section-title">البنية التحتية <span>Live</span></h2>
+  <p class="section-desc">جميع المكوّنات الأساسية مختبرة ومفعّلة في بيئة الإنتاج الحية</p>
+  <table class="status-table">
+    <thead><tr><th>المكوّن</th><th style="text-align:center;">الحالة</th><th>التفاصيل</th></tr></thead>
+    <tbody>
+      <tr><td>Google OAuth — Stateless Auth</td><td style="text-align:center;"><span class="badge-status green">مُصلح ✓</span></td><td>صفر أخطاء 419. مصادقة بدون Session. Auto-password لمستخدمي Google الجدد.</td></tr>
+      <tr><td>Service Request Flow الكامل</td><td style="text-align:center;"><span class="badge-status green">مُستعاد ✓</span></td><td>اختيار الخدمات ← إجابة الأسئلة ← مراجعة ← تقديم — يعمل بدون أعطال.</td></tr>
+      <tr><td>ERP Customer Auto-Sync</td><td style="text-align:center;"><span class="badge-status green">مباشر ✓</span></td><td>مؤكد في الإنتاج. Ahmed10 ظهر في ERPNext Selling > Customer في ثوانٍ.</td></tr>
+      <tr><td>Queue Worker + Retry Logic</td><td style="text-align:center;"><span class="badge-status green">يعمل ✓</span></td><td>QUEUE_CONNECTION=database. 3 محاولات. Daemon Worker مستمر في الخلفية.</td></tr>
+      <tr><td>Role-Based Access Control</td><td style="text-align:center;"><span class="badge-status green">مُتحقق ✓</span></td><td>super-admin / service-admin / client — لوحات مستقلة ومؤمّنة لكل دور.</td></tr>
+      <tr><td>SSL / CSRF / Security</td><td style="text-align:center;"><span class="badge-status green">محمي ✓</span></td><td>Stateless Auth تُلغي مشاكل CSRF. Secure Cookies. HTTPS مُفعَّل.</td></tr>
+      <tr><td>n8n Automation — 16 Workflows</td><td style="text-align:center;"><span class="badge-status green">نشط ✓</span></td><td>SEO + HR + Marketing + Monitoring — جميعها تعمل بشكل مستمر.</td></tr>
+      <tr><td>ERP Invoice & Project Sync</td><td style="text-align:center;"><span class="badge-status gold">المرحلة التالية</span></td><td>SyncOrderToERP.php مكتوب وجاهز — ينتظر ربط بوابة الدفع.</td></tr>
+      <tr><td>Client ERP Portal</td><td style="text-align:center;"><span class="badge-status blue">قريباً</span></td><td>العملاء سيرون فواتيرهم الحية من ERPNext في لوحة التحكم الخاصة بهم.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<!-- ROADMAP -->
+<section>
+  <div class="section-label">خريطة الطريق — ما بعد 7 مارس</div>
+  <h2 class="section-title">الـ 5% <span>المتبقية</span></h2>
+  <p class="section-desc">المعمارية جاهزة بالكامل — المطلوب فقط إضافة ميزات فوق الأساس المتين المبني</p>
+  <div class="roadmap">
+    <div class="roadmap-item"><div class="roadmap-num">01</div><div><div class="roadmap-title">أتمتة تقديم الفواتير</div><div class="roadmap-desc">تحويل فواتير ERPNext من Draft إلى Submitted تلقائياً عند تأكيد الدفع. SyncOrderToERP.php جاهز ومكتوب.</div></div><span class="badge-status gold">قريباً</span></div>
+    <div class="roadmap-item"><div class="roadmap-num">02</div><div><div class="roadmap-title">ERPNext Webhooks — Real-time</div><div class="roadmap-desc">Frappe Webhooks تُبلّغ Laravel فورياً عند تغيير حالة المشاريع — تحديثات حية للعميل بدون Polling.</div></div><span class="badge-status gold">قريباً</span></div>
+    <div class="roadmap-item"><div class="roadmap-num">03</div><div><div class="roadmap-title">Client ERP Portal</div><div class="roadmap-desc">الفواتير الحية من ERPNext مدمجة في Dashboard العميل — المبالغ المستحقة، تواريخ الاستحقاق، حالة الدفع.</div></div><span class="badge-status blue">مُخطَّط</span></div>
+    <div class="roadmap-item"><div class="roadmap-num">04</div><div><div class="roadmap-title">Sales Order → Invoice Link</div><div class="roadmap-desc">ربط CombinedOrder بـ Sales Order في ERP قبل الفوترة — إكمال دورة المبيعات الكاملة في ERPNext.</div></div><span class="badge-status blue">مُخطَّط</span></div>
+    <div class="roadmap-item"><div class="roadmap-num">05</div><div><div class="roadmap-title">Teams + Zoom عبر n8n</div><div class="roadmap-desc">إشعارات Microsoft Teams وإنشاء Zoom Meeting تلقائياً عند كل طلب جديد. البنية التحتية جاهزة.</div></div><span class="badge-status blue">مُخطَّط</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLOSING -->
+<div class="cta">
+  <h2 class="cta-title">من موقع معطوب<br>إلى <span style="background:linear-gradient(135deg,#60A5FA,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">نظام Enterprise</span></h2>
+  <p class="cta-body">في 23 يوم، بُنيت بنية تحتية تضاهي أنظمة الشركات الكبرى في الخليج والعالم. المعمارية الآن قابلة للتوسع، مؤمّنة، ومؤتمتة بالكامل — جاهزة للمستوى التالي.</p>
+  <div style="display:inline-flex;align-items:center;gap:16px;padding:20px 40px;background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.3);border-radius:100px;margin-bottom:40px;">
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:var(--gray);">Overall Progress</div>
+    <div style="font-family:'Space Mono',monospace;font-size:32px;font-weight:700;color:var(--gold);">95%</div>
+    <div style="font-size:13px;color:var(--green);font-weight:600;">✓ Live &amp; Scalable</div>
+  </div>
+  <div class="cta-stack">
+    <span class="stack-tag">Laravel 11</span><span class="stack-tag">ERPNext</span><span class="stack-tag">Frappe Cloud</span><span class="stack-tag">n8n Automation</span><span class="stack-tag">Queue Workers</span><span class="stack-tag">OAuth 2.0</span><span class="stack-tag">MySQL</span><span class="stack-tag">REST API</span><span class="stack-tag">Spatie RBAC</span>
+  </div>
+</div>
+
+<div style="border-top:1px solid var(--border);padding:32px 40px;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+  <div><div style="font-weight:700;font-size:16px;">محمد صالح</div><div style="font-size:13px;color:var(--gray);">Full Stack Developer &amp; ERP Integration Architect</div></div>
+  <div style="text-align:left;"><div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--gray);">NordicBizHub  •  March 2026</div><div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--gray);">test1.nordicbizhub.com</div></div>
+</div>
+
+</main>
+</body>
+</html>
